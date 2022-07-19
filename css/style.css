@@ -1,0 +1,209 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body
+{
+    background: #faf8e5;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 300;
+}
+/* ------------------ Start Navbar style ------------------ */
+.header_home
+{
+    color: rgb(10, 0, 0);
+    box-sizing: content-box;
+}
+.main_nav
+{
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+.logo-compagny
+{
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+.cont-nav
+{
+    display: block;
+}
+.research_nav
+{
+    margin-right: 30%;
+    margin-left: 10%;
+    width: 2 0%;
+}
+.nav-link
+{
+    color: white;
+    font-size: 1.2rem;
+}
+.text_nav
+{
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Jim Nightshade';
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+.text_nav h1
+{
+    font-family: 'Arial, Helvetica, sans-serif';
+    font-size: 30px;
+}
+.text_nav h4
+{
+    font-size: 70px;
+    font-weight: 300;
+}
+.nav-item
+{
+    text-transform: uppercase;
+}
+
+/* ----------------- End Navbar style ----------------- */
+
+
+/* ----------------- Start Main style ----------------- */
+
+.main-product
+{
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: uppercase;
+    padding-top: 1%;
+    
+}
+.main-product .mn-pro-text
+{
+    margin-left: 40%;
+    margin-right:40%;
+    background: #261C19;
+    text-align: center;
+    padding: 1.3%;
+    color: white;
+    border-radius: 27px;
+}
+.contenu
+{
+    width: 100%;
+    display: block;
+}
+.product_contain
+{
+    display: flex;
+    margin-left: 7.5%;
+    width: 30%;
+    text-align: center;
+}
+
+.show_product img
+{
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+.panier_product
+{
+    color: white;
+    text-align: center;
+    width: 200px;
+    background-color: #ffc107;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    border: 0;
+}
+.panier_product:hover
+{
+    background-color: wheat;
+}
+.product-card
+{
+    max-width: 1300px;
+    width: 80%;
+    height: auto;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    justify-content: center;
+    grid: 10px;
+} 
+.product-item
+{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 2%;
+    background: white;
+    text-align: center;
+    width: 287px;
+    height: 370px;
+}
+
+main .title-main
+{
+    padding-bottom: 1rem;
+    border-bottom: 1px solid black;
+    margin-left: 9%;
+    margin-right: 9%;
+    margin-top: 5%;
+}
+main .menu-main
+{
+    margin-left: 10%;
+    margin-top: 1.4rem;
+}
+main .pag-nav
+{
+    margin: 5%;
+}
+main .formulaire
+{
+    margin: 5px;
+}
+main .formulaire .form-group
+{
+    padding: 7px;
+}
+main .formulaire .form-group .group-text
+{
+    margin-bottom: 8px;
+}
+
+
+/*------------------------ CSS product detail -------------------------
+.body{background-color: #000}.card{border:none}.product{background-color: #eee}.brand{font-size: 13px}.act-price{color:red;font-weight: 700}.dis-price{text-decoration: line-through}.about{font-size: 14px}.color{margin-bottom:10px}label.radio{cursor: pointer}label.radio input{position: absolute;top: 0;left: 0;visibility: hidden;pointer-events: none}label.radio span{padding: 2px 9px;border: 2px solid #ff0000;display: inline-block;color: #ff0000;border-radius: 3px;text-transform: uppercase}label.radio input:checked+span{border-color: #ff0000;background-color: #ff0000;color: #fff}.btn-danger{background-color: #ff0000 !important;border-color: #ff0000 !important}.btn-danger:hover{background-color: #da0606 !important;border-color: #da0606 !important}.btn-danger:focus{box-shadow: none}.cart i{margin-right: 10px}
+/*------------------------ END CSS PANIER ------------------------*/
+
+/* ----------------- Start Main style ----------------- */
+/* ----------------- Start Footer style ----------------- */
+footer
+{
+   width: 100%;
+}
+.info
+{
+    list-style: none;
+    margin: 10px 0;
+}
+.info .fa-solid
+{
+    margin-right: 2%;
+    font-size: 16px;
+    width: 20px;
+    margin-bottom: 5px;
+}
+
+
+@media screen and (max-width: 500px)
+{
+    .mn-pro-text 
+    {
+        font-size: 80%;
+    }
+}
