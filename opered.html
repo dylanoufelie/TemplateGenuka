@@ -26,55 +26,51 @@
 <body>
     <!-- Start Head Section -->
     <header class="header_home">
-        <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="main_nav">
-            <div class="logo-compagny">
-                <a class="navbar-brand" href="#">Logo + compagny</a>
-            </div>
-            <div class="container-fluid">
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <!-- navbar slide left -->
-                
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" aria-current="page" href="index.html">Accueil</a>
-                    </li>   
-                  <li class="nav-item active">
-                    <a class="nav-link" aria-current="page" href="shop_whiskey.html">Whisky</a>
-                  </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" aria-current="page" href="shop_vodka.html">Vodka</a>
-                  </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" aria-current="page" href="shop_champagne.html">Champagne</a>
-                  </li>
-                </ul>
-                <div class="research_nav">
-                    <form class="d-flex" style="width: 150%;">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
-                </div>
-                <!-- navbar slide right -->
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" aria-current="page" href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
-                    </li>
-                    <li class="nav-item active">
-                      <a class="nav-link" href="u_register.html"><i class="fa-solid fa-registered"></i></a>
-                    </li>
-                    <li class="nav-item active">
-                      <a class="nav-link disabled" data-bs-toggle="modal" data-bs-target="#modalCreateEvents" href="#" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user"></i></a>
-                    </li>
-                </ul>
+      <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="main_nav">
+          <div class="logo-compagny">
+              <a class="navbar-brand" href="#">Logo + compagny</a>
+          </div>
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+              <!-- navbar slide left -->
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" aria-current="page" href="shop_whiskey.html">Whisky</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" aria-current="page" href="shop_vodka.html">Vodka</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" aria-current="page" href="shop_champagne.html">Champagne</a>
+                </li>
+              </ul>
+              <div class="research_nav">
+                  <form class="d-flex" style="width: 150%;">
+                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                  </form>
               </div>
+              <!-- navbar slide right -->
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" aria-current="page" href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalCreateEvents" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-registered"></i></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogin" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user"></i></a>
+                  </li>
+              </ul>
             </div>
-        </div>
-        </nav>
-    </header>
+          </div>
+      </div>
+      </nav>
+  </header>
     <!-- End Head Section -->
 
     <!-- Start Container Section -->
@@ -82,6 +78,58 @@
         <!-- Section title -->
         <h2 class="title-main">Cart >> Opered</h2>
         <!-- end section title -->
+        
+        <!-- Card body START -->
+                <div class="card-opered">
+                  <h2 style="text-align: center;" >Opered</h2>
+                  <!-- Form settings START -->
+                  <form class="row g-3">
+                    <h5>personnal info</h5>
+                    <!-- First name -->
+                    <div class="col-sm-6 col-lg-4">
+                      <label class="form-label">First name</label>
+                      <input type="text" class="form-control" placeholder="" value="Dylan">
+                    </div>
+                    <!-- Last name -->
+                    <div class="col-sm-6 col-lg-4">
+                      <label class="form-label">Last name</label>
+                      <input type="text" class="form-control" placeholder="" value="Noufelie">
+                    </div>
+                    <!-- Additional name -->
+                    <div class="col-sm-6 col-lg-4">
+                      <label class="form-label">Email</label>
+                      <input type="text" class="form-control" placeholder="" value="dylanomiguel09@gmail.com">
+                    </div>
+                    <h5>delivery Info</h5>
+                    <!-- User name -->
+                    <div class="col-sm-6">
+                      <label class="form-label">address</label>
+                      <input type="text" class="form-control" placeholder="" value="nlonkak">
+                    </div>
+                    <!-- Birthday -->
+                    <div class="col-lg-6">
+                      <label class="form-label">date</label>
+                      <input type="date" class="form-control flatpickr" value="12/12/1990">
+                    </div>
+                    <!-- Phone number -->
+                    <div class="col-sm-6">
+                      <label class="form-label">Phone number</label>
+                      <input type="number" class="form-control" placeholder="" value="(678) 324-1251">
+                    </div>
+                    <!-- Phone number -->
+                    <div class="col-sm-6">
+                      <label class="form-label">Email</label>
+                      <input type="text" class="form-control" placeholder="" value="dylanomiguel09@gmail.com">
+                      <!-- Add new email -->
+                    </div>
+                    <!-- Button  -->
+                    <div class="col-12 text-end">
+                      <button type="submit" class="btn btn-sm btn-primary mb-0">Buy</button>
+                    </div>
+                  </form>
+                  <!-- Settings END -->
+                </div>
+              <!-- Card body END -->
 
         <!--Modal Connexion + inscription-->
         <div class="modal fade" id="modalCreateEvents" tabindex="-1" aria-labelledby="modalLabelCreateAlbum" aria-hidden="true">
