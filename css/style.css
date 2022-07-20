@@ -164,6 +164,7 @@ main .pag-nav
 }
 main .formulaire
 {
+    /*width: max-content;*/
     margin: 5px;
 }
 main .formulaire .form-group
