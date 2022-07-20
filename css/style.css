@@ -19,9 +19,9 @@ body
 }
 .main_nav
 {
-    width: 100%;
-    padding-left: 70px;
-    padding-right: 70px;
+    width: 100%;    
+    padding-left: 5%;
+    padding-right: 5%;
 }
 .logo-compagny
 {
@@ -176,7 +176,7 @@ main .formulaire .form-group .group-text
 }
 main .card-opered
 {
-    padding: 5% 12%;
+    padding: 5% 20%;
 }
 
 
