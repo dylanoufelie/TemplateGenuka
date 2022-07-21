@@ -20,8 +20,7 @@ body
 .main_nav
 {
     width: 100%;    
-    padding-left: 5%;
-    padding-right: 5%;
+    padding: 1% 5%;
 }
 .logo-compagny
 {
@@ -49,7 +48,7 @@ body
     text-align: center;
     text-transform: uppercase;
     font-family: 'Jim Nightshade';
-    padding-top: 70px;
+    padding-top: 10%;
     padding-bottom: 20px;
 }
 .text_nav h1
@@ -151,7 +150,7 @@ main .title-main
     border-bottom: 1px solid black;
     margin-left: 9%;
     margin-right: 9%;
-    margin-top: 5%;
+    margin-top: 10%;
 }
 main .menu-main
 {
