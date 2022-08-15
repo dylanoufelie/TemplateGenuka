@@ -2,45 +2,38 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { addCart, setProduct, setProducts } from '../settings/DataSlice';
+import { addCart, setCollection, setCollections, setProduct } from '../settings/DataSlice';
 
 const Collection = () => {
 
-  const data = useSelector((state) => state.data)
+  const dataGlobal = useSelector((state) => state.data)
   const dispatch = useDispatch();
 
-  let dProductPer = data.product
-
-
-  const [dCollection, setCollection] = useState([])
-  const [dProduct, setDproduct] = useState([])
   const [dppgination, setPgniation] = useState([])
 
-
-  //Function sort by Collection
-  function productByCollection(id) {
-
+  //  Function list products per Collection via global data that name equals to collection (collection = product_per_collection)
+  function productPerCollection(id) {
     axios
-      .get(data.api + "companies/2/collections/" + id)
-      .then((resc) => {
-        setDproduct(resc.data.products.data)
+      .get(dataGlobal.api + "companies/" + dataGlobal.company.id + "/collections/" + id)
+      .then((response) => {
+        dispatch(setCollection(response.data.products.data))
       });
 
     axios
-      .get(data.api + "companies/2/collections/" + id)
-      .then((resc) => {
-        setPgniation(resc.data.products.links)
+      .get(dataGlobal.api + "companies/" + dataGlobal.company.id + "/collections/" + id)
+      .then((response) => {
+        setPgniation(response.data.products.links)
       })
   }
 
-  //GET COLLECTION PRODUCT
+  //  Get Request to take all collection of api Genuka
   useEffect(
     () => {
       axios
-        .get(data.api + "companies/2/collections")
-        .then((resc) => {
-          setCollection(resc.data.data)
-          productByCollection(resc.data.data[0].id)
+        .get(dataGlobal.api + "companies/" + dataGlobal.company.id + "/collections")
+        .then((response) => {
+          dispatch(setCollections(response.data.data))
+          productPerCollection(response.data.data[0].id)
         });
     }, []
   );
@@ -49,14 +42,14 @@ const Collection = () => {
   function pagination(url) {
     axios
       .get(url)
-      .then((resl) => setDproduct(resl.data.products.data)
+      .then((response) => dispatch(setCollection(response.data.products.data))
       )
-    console.log(url)
+
     axios
       .get(url)
-      .then((resl) => {
-        setPgniation(resl.data.products.links)
-        if (resl.data.products.links.next == null) {
+      .then((response) => {
+        setPgniation(response.data.products.links)
+        if (response.data.products.links.next == null) {
           document.getElementById("next")?.classList.add("disabled")
           document.getElementById("previous")?.classList.add("active")
         } else {
@@ -64,7 +57,7 @@ const Collection = () => {
           document.getElementById("previous")?.classList.remove("active")
         }
 
-        if (resl.data.products.links.prev == null) {
+        if (response.data.products.links.prev == null) {
           document.getElementById("previous")?.classList.add("disabled")
         } else {
           document.getElementById("previous")?.classList.remove("disabled")
@@ -88,10 +81,10 @@ const Collection = () => {
           </button>
           <div className="dropdown-menu">
             {
-              dCollection.map(
-                collection => (
-                  <Link class="dropdown-item" to={'/product'} key={collection.id} onClick={() => productByCollection(collection.id)}>
-                    {collection.name} <br />
+              dataGlobal.collections.map(
+                collectionItem => (
+                  <Link class="dropdown-item" to={'/product'} key={collectionItem.id} onClick={() => productPerCollection(collectionItem.id)}>
+                    {collectionItem.name}<br />
                   </Link>
                 )
               )
@@ -103,21 +96,21 @@ const Collection = () => {
       {/* title product by collection */}
       <h3 style={{ textAlign: 'center', color: '#ffc107' }}>Products</h3>
 
-      {/* title product by collection */}
+      {/* title product per collection */}
       <div className="product-card">
         {
-          dProduct.slice(0, 10).map(
+          dataGlobal.collection.slice(0, 10).map(
             dProduct => (
               <div className="product-item">
                 <Link to={'/detail-product/' + dProduct.id}
                   onClick={() => dispatch(setProduct(dProduct))}>
                   {
-                    dProduct.medias.slice(0, 1).map(
-                      value => (
-                        <img className="image_product" title='View detail product' alt=""
-                          src={value.link} width={'100%'} height={'245px'} />
-                      )
-                    )
+                    dProduct.medias.length > 0 ?
+                      <img className="image_product" src={dProduct.medias[0].link} id="image_product" alt=""
+                        title='View detail product' width={'100%'} height={'245px'} />
+                      :
+                      <img className="image_product" src='asset\image\product\productDefaut.png' id="image_product" alt={dProduct.name}
+                        title='View detail product' width={'100%'} height={'245px'} />
                   }
                 </Link>
                 <div className="price_product">
@@ -133,10 +126,10 @@ const Collection = () => {
       <nav className="pag-nav" aria-label="Page navigation">
         <ul className="pagination justify-content-center">
           <li className="page-item disabled" id='previous' onClick={() => pagination(dppgination.prev)}>
-            <Link className="page-link" to="#" tabindex="-1" aria-disabled="true">Previous</Link>
+            <Link className="page-link" to='#' tabindex="-1" aria-disabled="true">Previous</Link>
           </li>
           <li className="page-item active" id='next' onClick={() => pagination(dppgination.next)}>
-            <Link className="page-link" to="#">Next</Link>
+            <Link className="page-link" to='#'>Next</Link>
           </li>
         </ul>
       </nav>

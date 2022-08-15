@@ -7,20 +7,17 @@ import { deleteToCart, setQuantity, setRemoveQuantity } from '../settings/DataSl
 const Cart = () => {
 
   const { isAuthenticated } = useContext(Auth)
-  const data = useSelector((state) => state.data);
+  const data = useSelector((state) => state.data)
   const dispatch = useDispatch()
-  console.log(data.cart, "test cart")
-  let prixTotal = 0;
-  function deleteAll(params) {
-    dispatch(deleteToCart(params))
-  }
+
+  let prixTotal = 0
 
   return (
     <main>
       <div className="title_na">
         <h2 className="title-main">Cart</h2>
       </div>
-      {/* <!-- end section title --> */}
+
       <section className="h-100 gradient-custom">
         <div className="container py-5">
           <div className="row d-flex justify-content-center my-4">
@@ -42,11 +39,12 @@ const Cart = () => {
                             <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
                               {/* <!-- Image --> */}
                               <div className="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                {item.image.slice(0, 1).map(
-                                  img => (
-                                    <img src={img.link} alt="imageProduct" className="w-100" />
-                                  )
-                                )}
+                                {
+                                  item.image.lenght > 0 ?
+                                    <img src={item.image[0].link} alt="imageProduct" className="w-100" />
+                                    :
+                                    <img src='asset\image\product\productDefaut.png' alt="imageProduct" className="w-100" />
+                                }
                                 <Link to="#!">
                                   <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.2)' }}></div>
                                 </Link>
@@ -60,7 +58,7 @@ const Cart = () => {
                               <p>collection</p>
                               <button className="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
                                 id={item.id}
-                                onClick={() => deleteAll(index)}
+                                onClick={() => dispatch(deleteToCart(index))}
                                 title="Remove item">
                                 <i className="fas fa-trash"></i>
                               </button>
@@ -125,8 +123,6 @@ const Cart = () => {
                             <label for="exampleFormControlSelect1" className="group-text disabled">Choose Shipping</label>
                             <select className="form-control" id="exampleFormControlSelect1" value={"disabled"} disabled="disabled">
                               <option disabled="disabled"></option>
-
-                              <input type="button" value="Home Shipping" />
                             </select>
                           </div>
                           <div className="form-group">
@@ -139,13 +135,14 @@ const Cart = () => {
                           </div>
                           {(!isAuthenticated && (
                             <>
-                              <Link to={'#'} className="btn btn-primary btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#modalLogin" tabindex="-1" aria-disabled="true">Order</Link>
+                              <Link to={'/opered'} className="btn btn-primary btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#modalLogin" tabindex="-1" aria-disabled="true">Order</Link>
                             </>
                           )) || ((
                             <>
-                              <button style={{ justifyContent: 'center' }} type="submit" className="btn btn-primary btn-lg btn-success">
+                              {/* <button style={{ justifyContent: 'center' }} type="submit" className="btn btn-primary btn-lg btn-success">
                                 <Link style={{ textDecoration: 'none' }} color='white' to={'/opered'}>Order</Link>
-                              </button>
+                              </button> */}
+                              <Link style={{ justifyContent: 'center' }} type="submit" to={'/opered'} className="btn btn-primary btn-lg btn-success">Order</Link>
                             </>
                           ))}
                         </form>
@@ -156,20 +153,20 @@ const Cart = () => {
                 <center>
                   <div className="card-body">
                     <p><strong>OURS PAYMENT METHOD</strong></p>
-                    <img className="me-2" style={{ width: '45px' }}
+                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
                       src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
                       alt="Visa" />
-                    <img className="me-2" style={{ width: '45px' }}
-                      src="asset/image/paypal.png"
-                      alt="paypal" />
-                    <img className="me-2" style={{ width: '45px' }}
+                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
                       src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
                       alt="Mastercard" />
-                    <img className="me-2" style={{ width: '45px' }}
-                      src="asset/image/om_momo.jfif"
-                      alt="Om/momo" />
-                    <img className="me-2" style={{ width: '45px' }}
-                      src="asset/image/cash.jfif"
+                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
+                      src="asset/image/mtn.jpg"
+                      alt="MoMo" />
+                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
+                      src="asset/image/orange.png"
+                      alt="Om" />
+                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
+                      src="asset/image/cash.png"
                       alt="Om/momo" />
                   </div>
                 </center>

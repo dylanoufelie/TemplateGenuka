@@ -1,19 +1,18 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { addCart } from '../settings/DataSlice';
 
 const SimpleProduct = () => {
 
     const data = useSelector((state) => state.data);
-    console.log(data.product.medias, 'test-product')
-
 
     setTimeout(function () {
         let desc = document.getElementById('desc')
         if (desc) {
             desc.innerHTML = data.product.description
         }
-        console.log(desc)
+        // console.log(desc)
     }, 1000);
 
     return (
@@ -57,7 +56,7 @@ const SimpleProduct = () => {
                                                 <option value="dog">Bottle</option>
                                             </select>
 
-                                            <div class="cart mt-4 align-items-center"> <button class="btn btn-outline-success text-uppercase mr-2 px-4">Add to cart</button></div>
+                                            <div class="cart mt-4 align-items-center"> <button class="btn btn-outline-success text-uppercase mr-2 px-4" onClick={() => addCart(data.product)}>Add to cart</button></div>
                                         </div>
                                     </div>
                                 </div>

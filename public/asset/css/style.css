@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+img {
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+}
+
 body {
     text-decoration: none;
     background: #faf8e5;
@@ -38,6 +43,17 @@ body {
     margin-left: 10%;
     width: 2 0%;
 }
+
+.bar-search{
+    position: absolute;
+    width : 120% ;
+    height: 500px;
+    background-color: #fff;
+    border-radius: 5px;
+    z-index: 100000000000000;
+    box-shadow: 5px 5px 20px black;
+    text-decoration: none;
+ }
 
 .nav-link {
     color: white;
@@ -144,6 +160,14 @@ body {
     text-align: center;
     width: 287px;
     height: 370px;
+    transition: transform 0.5s;
+    border-radius: 5%;
+    border: #474644;
+    box-shadow: 0 2.5px 5px 0 rgba(222, 222, 222, 0.5);
+}
+
+.product-item:hover {
+    transform: translateY(-2%);
 }
 
 main .title-main {

@@ -18,7 +18,7 @@ const Home = () => {
             <div className="main-product">
                 <h4 className="mn-pro-text">Our products</h4>
             </div>
-            {/* Contain text */}
+            
             <div className="contenu">
                 <Card/>
             </div> 

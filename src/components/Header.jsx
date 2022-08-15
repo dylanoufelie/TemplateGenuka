@@ -1,27 +1,36 @@
 import { Link } from 'react-router-dom';
 import Auth from '../context/Auth';
 import { logout } from '../services/AuthApi';
-import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { setProductSearch } from '../settings/DataSlice';
 
 
 const Header = () => {
+
     const { isAuthenticated, setIsAuthenticated } = useContext(Auth);
+    const [itemSearch, setItemSearch] = useState([])
+
     const handleLogout = () => {
         logout()
         setIsAuthenticated(false)
     }
 
     const data = useSelector((state) => state.data);
+    const dispatch = useDispatch();
 
     function searchProducts() {
-        try {
+        if (itemSearch !== "") {
             axios
-                .post(data.api + 'companies/' + data.company.id + '/products/search')
-                .then(search => search.data)
-        } catch (error) {
-            console.log(error.message)
+                .post(data.api + 'companies/' + data.company.id + '/products/search?q=' + itemSearch)
+                .then((result) => {
+                    dispatch(setProductSearch(result.data))
+                }).catch((err) => {
+                    console.log(err)
+                });
+        } else {
+            dispatch(setProductSearch([]))
         }
     }
 
@@ -46,7 +55,7 @@ const Header = () => {
                                     <Link to={'/product'} className="nav-link" aria-current="page">Product</Link>
                                 </li>
                                 <li className="nav-item active">
-                                    <Link to={'/detail-collection'} className="nav-link" aria-current="page">Blogs</Link>
+                                    <Link to={'/blogs'} className="nav-link" aria-current="page">Blogs</Link>
                                 </li>
                             </ul>
                             <div className="research_nav">
@@ -54,6 +63,37 @@ const Header = () => {
                                     <input className="form-control me-2" type="search" placeholder="Search..." aria-label="Search" />
                                     <button className="btn btn-warning" type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
                                 </form>
+                                {/* <div className='bar-search overflow'>
+                                    <ul style={{ padding: '5px 10px' }}>
+                                        {data.productsearch.map((produit) => (
+                                            <Link
+                                                to={'/produit/' + produit.id}
+                                                onClick={() => (
+                                                    dispatch(setProduct(produit))
+                                                    //setShowSearchList(false)
+                                                )}
+                                            >
+                                                <li
+                                                    style={{
+                                                        listStyleType: 'none',
+                                                        borderBottom: '1px solid grey',
+                                                        padding: '10px 3px',
+                                                        cursor: 'pointer',
+                                                        textDecoration: 'none',
+                                                        textAlign: 'left',
+                                                    }}
+                                                >
+                                                    <p
+                                                        className="ron3"
+                                                        style={{ marginBottom: '0px' }}
+                                                    >
+                                                        {produit.name}
+                                                    </p>
+                                                </li>
+                                            </Link>
+                                        ))}
+                                    </ul>
+                                </div> */}
                             </div>
                             {/* <!-- navbar slide right --> */}
                             <ul className="navbar-nav ml-auto">

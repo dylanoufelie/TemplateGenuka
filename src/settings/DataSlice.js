@@ -3,11 +3,13 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     company: null,
-    products: null,
-    collections: null,
+    allProducts: [],
+    collections: [],
     token: null,
     product: null,
-    collection: null,
+    productSearch: null,
+    // Collection is variable that contain all products per collections
+    collection: [],
     idProduct: null,
     idCollection: null,
     user: null,
@@ -17,18 +19,10 @@ const initialState = {
     cart: {
         products: {
             product: [
-                //     {
-                //     name: null,
-                //     id: null,
-                //     quantity: null,
-                //     price: null,
-                //     image: {},
                 //   /*   variantes:[{
                 //         format:"",
                 //         taille:"",
                 //         model: ""
-                //     }] */
-                // }
             ],
             total: 0,
         },
@@ -73,15 +67,14 @@ const dataSlice = createSlice({
     name: "data",
     initialState: initialState,
     reducers: {
-        /**setter */
         setCompany: (state, action) => {
             state.company = action.payload
         },
         setLogin: (state, action) => {
             state.login = action.payload
         },
-        setProducts: (state, action) => {
-            state.products = action.payload
+        setAllProducts: (state, action) => {
+            state.allProducts = action.payload
         },
         setProduct: (state, action) => {
             state.product = action.payload
@@ -108,6 +101,9 @@ const dataSlice = createSlice({
         },
         setCollections: (state, action) => {
             state.collections = action.payload
+        },
+        setProductSearch: (state, action) => {
+            state.productSearch =action.payload
         },
         setToken: (state, action) => {
             state.token = action.payload
@@ -204,14 +200,16 @@ const dataSlice = createSlice({
         },
     }
 });
+
 export const {
     setCompany,
     setLogin,
-    setProducts,
+    setAllProducts,
     addProducts,
     addProduct,
     addCollection,
     setCollections,
+    setProductSearch,
     setToken,
     setProduct,
     setCollection,
@@ -224,7 +222,10 @@ export const {
     addProductToCart,
     deleteToCart,
     setRemoveQuantity,
-    setCart, getCompany } = dataSlice.actions;
+    setCart, 
+    getCompany 
+} = dataSlice.actions;
+
 export const store = configureStore({
     reducer: {
         data: dataSlice.reducer

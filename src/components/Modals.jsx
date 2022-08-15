@@ -23,10 +23,10 @@ const Modals = () => {
     event.preventDefault();
     try {
       axios
-        .post("https://api.genuka.com/2021-10/clients/register", user)
-        .then(response => data.user = response.data 
+        .post(data.api + "clients/register", user)
+        .then(response => data.user = response.data
           // response.data.access_token
-          ).then(data => alert('success'))
+        ).then(data => alert('success'))
 
       const statut = await registed(user)
       setIsAuthenticated(statut)
@@ -44,9 +44,9 @@ const Modals = () => {
     try {
       axios
         .post(data.api + "clients/login", user)
-        .then(response => data.user = response.data 
+        .then(response => data.user = response.data
           //response.data.access_token,
-          )
+        )
       const response = await login(user)
       setIsAuthenticated(response)
 

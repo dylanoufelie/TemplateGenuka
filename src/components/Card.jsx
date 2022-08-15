@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import { addCart, addProductToCart, addTotalCart, setProduct, setProducts, setQuantity } from '../settings/DataSlice'
+import { addCart, addProductToCart, addTotalCart, setProduct, setAllProducts, setQuantity } from '../settings/DataSlice'
 
 const Card = () => {
 
     const data = useSelector((state) => state.data);
     const dispatch = useDispatch();
-
-    // let dProduct = data.product
 
     // axios
     // .get("https://api.genuka.com/2021-10/companies/2/products")
@@ -18,84 +16,80 @@ const Card = () => {
     // }).catch((err) => {
 
     // });
+    // const [dProduct, setDproducts] = useState([]);
 
-
-    const [dProduct, setProducts] = useState([])
     useEffect(
         () => {
             axios
-                .get(data.api + "companies/2/products")
-                .then((resp) => dispatch(setProducts(resp.data.data)))
+                .get(data.api + "companies/" + data.company.id + "/products")
+                .then((response) => dispatch(setAllProducts(response.data.data)))
+                console.log(data.products)
         }, []
     );
 
-    // function addToCart(products) {
+    function addToCart(products) {
 
-    //     let nbr = 0
+        let nbr = 0
 
-    //     if (data.cart.products.total === 0) {
-    //         let item = {}
+        if (data.cart.products.total === 0) {
+            let item = {}
 
-    //         item.name = products.name
-    //         item.id = products.id
-    //         item.quantity = 1
-    //         item.price = products.price
-    //         item.image = products.medias
+            item.name = products.name
+            item.id = products.id
+            item.quantity = 1
+            item.price = products.price
+            item.image = products.medias
 
-    //         dispatch(addProductToCart(item))
-    //         dispatch(addTotalCart())
+            dispatch(addProductToCart(item))
+            dispatch(addTotalCart())
 
-    //     } else {
-    //         for (let index = 0; index < data.cart.products.total; index++) {
-    //             if (data.cart.products.product[index].id === products.id) {
-    //                 dispatch(setQuantity(products))
-    //                 nbr++
-    //             }
-    //         }
+        } else {
+            for (let index = 0; index < data.cart.products.total; index++) {
+                if (data.cart.products.product[index].id === products.id) {
+                    dispatch(setQuantity(products))
+                    nbr++
+                }
+            }
 
-    //         if (nbr === 0) {
-    //             let item = {}
+            if (nbr === 0) {
+                let item = {}
 
-    //             item.name = products.name
-    //             item.id = products.id
-    //             item.quantity = 1
-    //             item.price = products.price
-    //             item.image = products.medias
+                item.name = products.name
+                item.id = products.id
+                item.quantity = 1
+                item.price = products.price
+                item.image = products.medias
 
-    //             dispatch(addProductToCart(item))
-    //             dispatch(addTotalCart())
+                dispatch(addProductToCart(item))
+                dispatch(addTotalCart())
 
-    //         }
-    //     }
-    //     console.log(products)
-    // }
+            }
+        }
+        console.log(products)
+    }
 
 
     return (
         <div className="product-card">
             {
-                dProduct.slice(0, 8).map(
-                    dProduct => (
+                data.allProducts.map(
+                    products => (
                         <div className="product-item">
-                            <Link to={"/detail-product/" + dProduct.id} onClick={() => dispatch(setProduct(dProduct))}>
+                            <Link to={"/detail-product/" + products.id} onClick={() => dispatch(setProduct(products))}>
                                 {
-                                    dProduct.medias.slice(0, 1).map(
-                                        value => (
-                                            value.length != 0 ?
-                                                <img className="image_product" src={value.link} id="image_product" alt=""
-                                                    title='View detail product' width={'100%'} height={'245px'} />
-                                                :
-                                                <img className="image_product" src="" id="image_product" alt=""
-                                                    title='View detail product' width={'100%'} height={'245px'} />
-                                        )
-                                    )
+                                    products.medias.length > 0 ?
+                                        <img className="image_product" src={products.medias[0].link} id="image_product" alt=""
+                                            title='View detail product' width={'100%'} height={'245px'} />
+                                        :
+                                        <img className="image_product" src='asset\image\product\productDefaut.png' id="image_product" 
+                                            alt={products.name} title='View detail product' width={'100%'} height={'245px'} />
                                 }
                             </Link>
                             <div className="price_product">
-                                <h6>{dProduct.name}</h6>
-                                <h5>{dProduct.price} XAF</h5>
+                                <h6>{products.name}</h6>
+                                <h5>{products.price} XAF</h5>
                             </div>
-                            <button onClick={() => dispatch(addCart(dProduct))} className="panier_product" >Add to cart</button>
+                            <button onClick={() => addToCart(products)} className="panier_product" >Add to cart</button>
                         </div>
                     )
                 )

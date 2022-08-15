@@ -2,11 +2,16 @@ import React from 'react'
 import Cart from './Cart'
 
 const Opered = () => {
-  if (localStorage.miniblogToken) {
+  
+  function order() {
+    // code for order here...
+  }
+
+  if (!localStorage.miniblogToken) {
     return (
       <main>
         <div className="title_na">
-          <h2 className="title-main">Opered</h2>
+          <h2 className="title-main">Orders</h2>
         </div>
 
         <div class="card-opered">

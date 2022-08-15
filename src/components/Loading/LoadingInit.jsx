@@ -9,7 +9,7 @@ function LoadingInit() {
       <div class="spinner-border" role="status"
         style={{  
           position: 'absolute', width: '200px', 
-          height: '200px', top:'0', bottom:'0', 
+          height: '150px', top:'0', bottom:'0', 
           color:'#ffc107a6', left:'0',
           right: '0', margin: 'auto', 
         }}>
