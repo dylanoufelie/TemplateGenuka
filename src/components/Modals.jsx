@@ -1,16 +1,18 @@
 import axios from 'axios'
 import React, { useState, useContext } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Auth from '../context/Auth'
 import { login, registed } from '../services/AuthApi'
+import { setUsers } from '../settings/DataSlice'
 
 const Modals = () => {
 
   const data = useSelector((state) => state.data);
+  const dispatch = useDispatch()
   const { setIsAuthenticated } = useContext(Auth);
 
   const [user, setUser] = useState({
-    company_id: 539,
+    company_id: data.company.id,
     fromApi: true,
   })
 
@@ -24,9 +26,10 @@ const Modals = () => {
     try {
       axios
         .post(data.api + "clients/register", user)
-        .then(response => data.user = response.data
-          // response.data.access_token
+        .then(response => dispatch(setUsers(response.data))
         ).then(data => alert('success'))
+
+        console.log('User :', data.users)
 
       const statut = await registed(user)
       setIsAuthenticated(statut)
@@ -44,10 +47,11 @@ const Modals = () => {
     try {
       axios
         .post(data.api + "clients/login", user)
-        .then(response => data.user = response.data
-          //response.data.access_token,
+        .then(response => dispatch(setUsers(response.data)),
+          console.log('user login :',data.users)
         )
-      const response = await login(user)
+      
+        const response = await login(user)
       setIsAuthenticated(response)
 
     } catch ({ response }) {

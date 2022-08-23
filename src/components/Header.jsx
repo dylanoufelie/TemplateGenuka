@@ -26,6 +26,7 @@ const Header = () => {
                 .post(data.api + 'companies/' + data.company.id + '/products/search?q=' + itemSearch)
                 .then((result) => {
                     dispatch(setProductSearch(result.data))
+                    console.log(result)
                 }).catch((err) => {
                     console.log(err)
                 });
@@ -39,7 +40,7 @@ const Header = () => {
             <nav className="navbar navbar-expand-lg navbar-light">
                 <div className="main_nav fixed-top">
                     <div className="logo-compagny">
-                        <Link className="navbar-brand" to={'/'}><img src={data.company.logo} width='3%' alt='logo compagny' />{data.company.name}</Link>
+                        <Link className="navbar-brand" to={'/'}><img src={data.company.logo} width='3%' height={'3%'} style={{ margin: '1%' }} alt='logo compagny' />{data.company.name}</Link>
                     </div>
                     <div className="container-fluid">
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,8 +61,8 @@ const Header = () => {
                             </ul>
                             <div className="research_nav">
                                 <form className="d-flex" style={{ width: '150%' }}>
-                                    <input className="form-control me-2" type="search" placeholder="Search..." aria-label="Search" />
-                                    <button className="btn btn-warning" type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
+                                    <input className="form-control me-2" type="search" onChange={() => setItemSearch()} placeholder="Search..." aria-label="Search" />
+                                    <button className="btn btn-warning" onClick={() => searchProducts()}><i className="fa-solid fa-magnifying-glass"></i></button>
                                 </form>
                                 {/* <div className='bar-search overflow'>
                                     <ul style={{ padding: '5px 10px' }}>

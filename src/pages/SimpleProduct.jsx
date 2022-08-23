@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { addCart } from '../settings/DataSlice';
 
 const SimpleProduct = () => {
@@ -8,11 +8,10 @@ const SimpleProduct = () => {
     const data = useSelector((state) => state.data);
 
     setTimeout(function () {
-        let desc = document.getElementById('desc')
+        let desc = document.getElementById('desc');
         if (desc) {
-            desc.innerHTML = data.product.description
+            desc.innerHTML = data.product.description;
         }
-        // console.log(desc)
     }, 1000);
 
     return (
@@ -46,7 +45,7 @@ const SimpleProduct = () => {
                                             </div>
                                             <div class="mt-4 mb-3">
                                                 <h5 class="text-uppercase">{data.product.name}</h5>
-                                                <div class="price d-flex flex-row align-items-center"> <span class="act-price">{data.product.price} XAF</span>
+                                                <div class="price d-flex flex-row align-items-center"> <span class="act-price">{data.product.price} {data.company.currency.symbol}</span>
                                                 </div>
                                             </div>
                                             <p class="about" id='desc'></p>
@@ -67,7 +66,7 @@ const SimpleProduct = () => {
             </main>
 
         </React.Fragment>
-    )
+    );
 }
 
-export default SimpleProduct
+export default SimpleProduct;

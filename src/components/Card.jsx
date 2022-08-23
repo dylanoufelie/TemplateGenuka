@@ -9,21 +9,11 @@ const Card = () => {
     const data = useSelector((state) => state.data);
     const dispatch = useDispatch();
 
-    // axios
-    // .get("https://api.genuka.com/2021-10/companies/2/products")
-    // .then((result) => {
-    //     dispatch(setProduct(result.data.data))
-    // }).catch((err) => {
-
-    // });
-    // const [dProduct, setDproducts] = useState([]);
-
     useEffect(
         () => {
             axios
                 .get(data.api + "companies/" + data.company.id + "/products")
                 .then((response) => dispatch(setAllProducts(response.data.data)))
-                console.log(data.products)
         }, []
     );
 
@@ -72,7 +62,7 @@ const Card = () => {
     return (
         <div className="product-card">
             {
-                data.allProducts.map(
+                data.allProducts.slice(0, 9).map(
                     products => (
                         <div className="product-item">
                             <Link to={"/detail-product/" + products.id} onClick={() => dispatch(setProduct(products))}>
@@ -87,7 +77,7 @@ const Card = () => {
                             </Link>
                             <div className="price_product">
                                 <h6>{products.name}</h6>
-                                <h5>{products.price} XAF</h5>
+                                <h5>{products.price} {data.company.currency.symbol}</h5>
                             </div>
                             <button onClick={() => addToCart(products)} className="panier_product" >Add to cart</button>
                         </div>

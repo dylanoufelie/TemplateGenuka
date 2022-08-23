@@ -8,9 +8,9 @@ function LoadingInit() {
         }}>
       <div class="spinner-border" role="status"
         style={{  
-          position: 'absolute', width: '200px', 
-          height: '150px', top:'0', bottom:'0', 
-          color:'#ffc107a6', left:'0',
+          position: 'absolute', width: '100px', 
+          height: '100px', top:'0', bottom:'0', 
+          color:'#ffc107a6', left:'0', fontWeight: 'bolder',
           right: '0', margin: 'auto', 
         }}>
         <span class="visually-hidden">Loading...</span>

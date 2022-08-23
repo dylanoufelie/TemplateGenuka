@@ -5,14 +5,13 @@ const Product = () => {
   return (
     <React.Fragment>
 
-        <main>
-            <div className="title_na">
-                <h2 className="title-main">Product / Per Collection</h2>
-            </div>
+      <main>
+        <div className="title_na">
+          <h2 className="title-main">Product / Per Collection</h2>
+        </div>
 
-            <Collection/>
-
-        </main>
+        <Collection />
+      </main>
 
     </React.Fragment>
   )

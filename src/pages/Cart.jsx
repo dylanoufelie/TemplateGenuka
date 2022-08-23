@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Auth from '../context/Auth';
-import { deleteToCart, setQuantity, setRemoveQuantity } from '../settings/DataSlice';
+import { deleteToCart, setMode, setQuantity, setRemoveQuantity } from '../settings/DataSlice';
 
 const Cart = () => {
 
@@ -32,6 +32,7 @@ const Cart = () => {
 
                       (item, index) => (
 
+                        // eslint-disable-next-line no-sequences
                         prixTotal = prixTotal + item.price * item.quantity,
                         <>
                           {/* <!-- Single item --> */}
@@ -41,7 +42,7 @@ const Cart = () => {
                               <div className="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                 {
                                   item.image.lenght > 0 ?
-                                    <img src={item.image[0].link} alt="imageProduct" className="w-100" />
+                                    <img src={item.image.link} alt="imageProduct" className="w-100" />
                                     :
                                     <img src='asset\image\product\productDefaut.png' alt="imageProduct" className="w-100" />
                                 }
@@ -53,7 +54,7 @@ const Cart = () => {
 
                             <div className="col-lg-5 col-md-6 mb-4 mb-lg-0">
                               {/* <!-- Data --> */}
-                              <p><strong>{item.price} XAF</strong></p>
+                              <p><strong>{item.price} {data.company.currency.symbole}</strong></p>
                               <p>{item.name}</p>
                               <p>collection</p>
                               <button className="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
@@ -82,16 +83,12 @@ const Cart = () => {
                                   <i className="fas fa-plus"></i>
                                 </button>
                               </div>
-                              {/* <!-- Quantity -->          
-                              <!-- Price --> */}
                               <p className="text-start text-md-center">
-                                <strong>XAF {item.price * item.quantity}</strong>
+                                <strong>{data.company.currency.symbole} {item.price * item.quantity}</strong>
                               </p>
-                              {/* <!-- Price --> */}
                             </div>
                           </div>
                           <hr className="my-4" />
-                          {/* <!-- Single item --> */}
                         </>
                       )
                     )
@@ -105,11 +102,10 @@ const Cart = () => {
                   <h5 className="mb-0">Total</h5>
                 </div>
                 <div className="card-body">
-                  <ul className="list-group list-group-flush">
-                    <li
-                      className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                  <ul className="list-group list-group-flush"> 
+                    <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                       Products
-                      <span><b>{prixTotal} XAF</b></span>
+                      <span><b>{prixTotal} {data.company.currency.symbol}</b></span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center px-0">
                       Shipping
@@ -120,17 +116,51 @@ const Cart = () => {
                       <div>
                         <form className="formulaire">
                           <div className="form-group">
-                            <label for="exampleFormControlSelect1" className="group-text disabled">Choose Shipping</label>
-                            <select className="form-control" id="exampleFormControlSelect1" value={"disabled"} disabled="disabled">
-                              <option disabled="disabled"></option>
+                            <label for="exampleFormControlSelect" className="group-text disabled">Choose Shipping</label>
+                            <select className="form-control" id="exampleFormControlSelect" value={"Home Shipping"} disabled="disabled">
+                              <option disabled="disabled"> Home Shipping </option>
                             </select>
                           </div>
                           <div className="form-group">
                             <label for="exampleFormControlSelect1" className="group-text">Choose payment method</label>
-                            <select className="form-control" id="exampleFormControlSelect1">
-                              <option>Cash</option>
-                              <option>Credit Card</option>
-                              <option>Mobile Money</option>
+                            <select className="form-control" id="exampleFormControlSelect1"
+                              onChange={() => {
+                                var value = document.getElementById("exampleFormControlSelect1");
+                                switch (value.value) {
+                                  case "Cash":
+                                    dispatch(setMode("cash"));
+                                    break;
+                                  case "Mobile Money":
+                                    dispatch(setMode("mobilemoney"));
+                                    break;
+                                  case "Card":
+                                    dispatch(setMode("card"));
+                                    break;
+                                  default:
+                                    break;
+                                }
+                              }}>
+                              {
+                                data.company.payment_modes.cash && (
+                                  <option selected>
+                                    Cash
+                                  </option>
+                                )
+                              }
+                              {
+                                data.company.payment_modes.mobilemoney && (
+                                  <option >
+                                    Mobile Money
+                                  </option>
+                                )
+                              }
+                              {
+                                data.company.payment_modes.card && ((
+                                  <option >
+                                    Card
+                                  </option>
+                                ))
+                              }
                             </select>
                           </div>
                           {(!isAuthenticated && (
@@ -139,9 +169,6 @@ const Cart = () => {
                             </>
                           )) || ((
                             <>
-                              {/* <button style={{ justifyContent: 'center' }} type="submit" className="btn btn-primary btn-lg btn-success">
-                                <Link style={{ textDecoration: 'none' }} color='white' to={'/opered'}>Order</Link>
-                              </button> */}
                               <Link style={{ justifyContent: 'center' }} type="submit" to={'/opered'} className="btn btn-primary btn-lg btn-success">Order</Link>
                             </>
                           ))}
@@ -153,21 +180,37 @@ const Cart = () => {
                 <center>
                   <div className="card-body">
                     <p><strong>OURS PAYMENT METHOD</strong></p>
-                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
-                      src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                      alt="Visa" />
-                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
-                      src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                      alt="Mastercard" />
-                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
-                      src="asset/image/mtn.jpg"
-                      alt="MoMo" />
-                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
-                      src="asset/image/orange.png"
-                      alt="Om" />
-                    <img className="me-2" style={{ width: '35px', height: '30px', margin:'0 3%' }}
-                      src="asset/image/cash.png"
-                      alt="Om/momo" />
+                    {
+                      data.company.payment_modes.card && (
+                        <>
+                          <img className="me-2" style={{ width: '35px', height: '30px', margin: '0 3%' }}
+                            src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                            alt="Visa" />
+                          <img className="me-2" style={{ width: '35px', height: '30px', margin: '0 3%' }}
+                            src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                            alt="Mastercard" />
+                        </>
+                      )
+                    }
+                    {
+                      data.company.payment_modes.mobilemoney.accept && (
+                        <>
+                          <img className="me-2" style={{ width: '35px', height: '30px', margin: '0 3%' }}
+                            src="asset/image/mtn.jpg"
+                            alt="MoMo" />
+                          <img className="me-2" style={{ width: '35px', height: '30px', margin: '0 3%' }}
+                            src="asset/image/orange.png"
+                            alt="Om" />
+                        </>
+                      )
+                    }
+                    {
+                      data.company.payment_modes.cash && (
+                        <img className="me-2" style={{ width: '35px', height: '30px', margin: '0 3%' }}
+                          src="asset/image/cash.png"
+                          alt="cash" />
+                      )
+                    }
                   </div>
                 </center>
               </div>
@@ -176,7 +219,7 @@ const Cart = () => {
         </div>
       </section>
     </main>
-  )
+  );
 }
 
-export default Cart
+export default Cart;

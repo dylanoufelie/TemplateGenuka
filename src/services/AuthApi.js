@@ -19,7 +19,6 @@ export async function login(credentials) {
 
   return axios
     .post("https://api.genuka.com/2021-10/clients/login", credentials)
-    // .post(data.api + "2021-10/clients/login", credentials)
     .then(response => response.data.access_token)
     .then(token => {
       addItem('miniblogToken', token)
@@ -32,7 +31,6 @@ export async function registed(credentials) {
 
   return axios
   .post("https://api.genuka.com/2021-10/clients/register", credentials)
-    // .post(data.api + "2021-10/clients/register", credentials)
     .then(response => response.data.access_token)
 }
 

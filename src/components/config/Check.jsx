@@ -24,7 +24,7 @@ export default function Check() {
     if (data.company === null) {
       dispatch(setLogin("company"));
       axios
-        .get(data.api + "companies/details/2")    // /byurl?url=" + domaine )
+        .get(data.api + "companies/details/430")    // /byurl?url=" + domaine ) 430
         .then((response) => {
           if (response.status === 200) {
             const website = response.data
@@ -37,7 +37,6 @@ export default function Check() {
         })
     }
   }
-
 
   getCompany()
   const company = data.company

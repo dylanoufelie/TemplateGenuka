@@ -11,7 +11,10 @@ const Collection = () => {
 
   const [dppgination, setPgniation] = useState([])
 
-  //  Function list products per Collection via global data that name equals to collection (collection = product_per_collection)
+  /* Function list products per Collection via global data that name equals to collection 
+    (collection = product_per_collection)
+  */
+
   function productPerCollection(id) {
     axios
       .get(dataGlobal.api + "companies/" + dataGlobal.company.id + "/collections/" + id)
@@ -27,6 +30,7 @@ const Collection = () => {
   }
 
   //  Get Request to take all collection of api Genuka
+  
   useEffect(
     () => {
       axios
@@ -35,7 +39,7 @@ const Collection = () => {
           dispatch(setCollections(response.data.data))
           productPerCollection(response.data.data[0].id)
         });
-    }, []
+    }
   );
 
   // From show the product of next page
@@ -115,7 +119,7 @@ const Collection = () => {
                 </Link>
                 <div className="price_product">
                   <h6>{dProduct.name}</h6>
-                  <h5>{dProduct.price} XAF</h5>
+                  <h5>{dProduct.price} {dataGlobal.company.currency.symbol}</h5>
                 </div><button onClick={() => dispatch(addCart(dProduct))} className="panier_product" >Add to cart</button>
               </div>
             )

@@ -5,25 +5,24 @@ const initialState = {
     company: null,
     allProducts: [],
     collections: [],
-    token: null,
+    totalPrice: 0,
     product: null,
     productSearch: null,
-    // Collection is variable that contain all products per collections
+    // Collection is variable that contain all products per collections...
     collection: [],
     idProduct: null,
     idCollection: null,
-    user: null,
+    users: {
+        user: {},
+        access_token: null,
+    },
+    commande:{},
     login: null,
     api: "https://api.genuka.com/2021-10/",
     url: document.location.protocol + "//" + document.location.hostname,
     cart: {
         products: {
-            product: [
-                //   /*   variantes:[{
-                //         format:"",
-                //         taille:"",
-                //         model: ""
-            ],
+            product: [],
             total: 0,
         },
         address: {
@@ -58,7 +57,7 @@ const initialState = {
         address_type: 2,
         date: "",
         human_date: "",
-        mode: "",
+        mode: "cash",
         state: 0
     }
 };
@@ -69,6 +68,12 @@ const dataSlice = createSlice({
     reducers: {
         setCompany: (state, action) => {
             state.company = action.payload
+        },
+        setCommande: (state, action) => {
+            state.commande =action.payload
+        },
+        setTotalPrice: (state, action) => {
+            state.totalPrice = action.payload
         },
         setLogin: (state, action) => {
             state.login = action.payload
@@ -93,7 +98,6 @@ const dataSlice = createSlice({
             for (let index = 0; index < action.payload.length; index++) {
                 const element = action.payload[index];
                 state.collections.data.push(element)
-
             }
         },
         addCollection: (state, action) => {
@@ -117,8 +121,12 @@ const dataSlice = createSlice({
         setIdCollection: (state, action) => {
             state.idCollection = action.payload
         },
-        setUser: (state, action) => {
-            state.user = action.payload
+        setMode: (state, action) => {
+            state.cart.mode = action.payload
+            console.log("State.cart",state.cart)
+        },
+        setUsers: (state, action) => {
+            state.users = action.payload
         },
         setCart: (state, action) => {
             state.cart = action.payload
@@ -215,7 +223,10 @@ export const {
     setCollection,
     setIdProduct,
     setIdCollection,
-    setUser,
+    setUsers,
+    setMode,
+    setCommande,
+    setTotalPrice,
     addCart,
     setQuantity,
     addTotalCart,
