@@ -12,6 +12,13 @@ const Cart = () => {
 
   let prixTotal = 0
 
+  /*
+    creer un menu déroulant qui permet de récuperer le 
+    numéro pour paiement mobile et le stocké dans la 
+    variable globale paymentService grace au 
+    dispatch(setPaymentService)
+  */
+
   return (
     <main>
       <div className="title_na">

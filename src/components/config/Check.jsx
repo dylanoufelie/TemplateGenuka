@@ -6,7 +6,6 @@ import { setCompany, setLogin } from "../../settings/DataSlice";
 import axios from "axios";
 import Header from "../Header";
 import Footer from "../Footer";
-import Modals from "../Modals";
 import Home from '../../pages/Home';
 import Product from '../../pages/Product'
 import Cart from '../../pages/Cart';
@@ -14,6 +13,9 @@ import SimpleProduct from '../../pages/SimpleProduct';
 import Opered from '../../pages/Opered';
 import React from 'react'
 import Blogs from '../../pages/Blogs';
+import Search from '../Modals/Search';
+import Modals from '../Modals/Modals';
+
 
 export default function Check() {
 
@@ -54,7 +56,11 @@ export default function Check() {
           <Route path='/detail-product/:id' element={<SimpleProduct />} />
         </Routes>
 
+      {/* Modals */}
+        <Search />
         <Modals />
+      {/* End Modals */}
+      
         <Footer />
       </BrowserRouter>
     )

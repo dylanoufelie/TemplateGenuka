@@ -2,37 +2,17 @@ import { Link } from 'react-router-dom';
 import Auth from '../context/Auth';
 import { logout } from '../services/AuthApi';
 import React, { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { setProductSearch } from '../settings/DataSlice';
+import { useSelector } from 'react-redux';
 
 
 const Header = () => {
 
     const { isAuthenticated, setIsAuthenticated } = useContext(Auth);
-    const [itemSearch, setItemSearch] = useState([])
-
+    const data = useSelector((state) => state.data);
+    const [loader, setLoader] = useState(false)
     const handleLogout = () => {
         logout()
         setIsAuthenticated(false)
-    }
-
-    const data = useSelector((state) => state.data);
-    const dispatch = useDispatch();
-
-    function searchProducts() {
-        if (itemSearch !== "") {
-            axios
-                .post(data.api + 'companies/' + data.company.id + '/products/search?q=' + itemSearch)
-                .then((result) => {
-                    dispatch(setProductSearch(result.data))
-                    console.log(result)
-                }).catch((err) => {
-                    console.log(err)
-                });
-        } else {
-            dispatch(setProductSearch([]))
-        }
     }
 
     return (
@@ -59,42 +39,11 @@ const Header = () => {
                                     <Link to={'/blogs'} className="nav-link" aria-current="page">Blogs</Link>
                                 </li>
                             </ul>
-                            <div className="research_nav">
-                                <form className="d-flex" style={{ width: '150%' }}>
-                                    <input className="form-control me-2" type="search" onChange={() => setItemSearch()} placeholder="Search..." aria-label="Search" />
-                                    <button className="btn btn-warning" onClick={() => searchProducts()}><i className="fa-solid fa-magnifying-glass"></i></button>
-                                </form>
-                                {/* <div className='bar-search overflow'>
-                                    <ul style={{ padding: '5px 10px' }}>
-                                        {data.productsearch.map((produit) => (
-                                            <Link
-                                                to={'/produit/' + produit.id}
-                                                onClick={() => (
-                                                    dispatch(setProduct(produit))
-                                                    //setShowSearchList(false)
-                                                )}
-                                            >
-                                                <li
-                                                    style={{
-                                                        listStyleType: 'none',
-                                                        borderBottom: '1px solid grey',
-                                                        padding: '10px 3px',
-                                                        cursor: 'pointer',
-                                                        textDecoration: 'none',
-                                                        textAlign: 'left',
-                                                    }}
-                                                >
-                                                    <p
-                                                        className="ron3"
-                                                        style={{ marginBottom: '0px' }}
-                                                    >
-                                                        {produit.name}
-                                                    </p>
-                                                </li>
-                                            </Link>
-                                        ))}
-                                    </ul>
-                                </div> */}
+                            <div className="research_nav" data-bs-toggle="modal" data-bs-target="#modalForSearch" tabindex="-1" aria-disabled="true">
+                                <nav className="d-flex" style={{ width: '150%' }}>
+                                    <input className="form-control me-2" type="search"  placeholder="Search..." aria-label="Search" />
+                                    <button className="btn btn-warning"><i className="fa-solid fa-magnifying-glass"></i></button>
+                                </nav>
                             </div>
                             {/* <!-- navbar slide right --> */}
                             <ul className="navbar-nav ml-auto">

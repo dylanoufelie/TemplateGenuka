@@ -2,6 +2,7 @@ import React from 'react'
 import Collection from '../components/Collection'
 
 const Product = () => {
+
   return (
     <React.Fragment>
 

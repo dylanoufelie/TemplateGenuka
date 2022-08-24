@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Auth from '../context/Auth'
-import { login, registed } from '../services/AuthApi'
-import { setUsers } from '../settings/DataSlice'
+import Auth from '../../context/Auth';
+import { login, registed } from '../../services/AuthApi';
+import { setUsers } from '../../settings/DataSlice';
 
 const Modals = () => {
 

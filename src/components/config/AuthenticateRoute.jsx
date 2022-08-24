@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
-import Auth from '../../context/Auth'
-import Home from '../../pages/Home'
+import React, { useContext } from 'react';
+import Auth from '../../context/Auth';
+import Home from '../../pages/Home';
 
 const AuthenticateRoute = ({ path, component }) => {
-    const { isAuthenticated } = useContext(Auth)
+    const { isAuthenticated } = useContext(Auth);
+    
     return isAuthenticated ? (
         <Route path={path} component={component} />
     ) : (
@@ -11,4 +12,4 @@ const AuthenticateRoute = ({ path, component }) => {
     )
 }
 
-export default AuthenticateRoute 
+export default AuthenticateRoute;

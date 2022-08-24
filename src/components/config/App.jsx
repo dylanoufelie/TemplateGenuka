@@ -10,10 +10,12 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
 
   return (
-    <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
+    <Auth.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+
       <Provider store={store}>
-        <Check/>
+        <Check />
       </Provider>
+      
     </Auth.Provider>
   )
 }

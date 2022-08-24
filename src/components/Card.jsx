@@ -13,7 +13,9 @@ const Card = () => {
         () => {
             axios
                 .get(data.api + "companies/" + data.company.id + "/products")
-                .then((response) => dispatch(setAllProducts(response.data.data)))
+                .then((response) => {dispatch(setAllProducts(response.data.data))
+                    console.log('all products :', response.data.links)
+                })
         }, []
     );
 
@@ -62,7 +64,7 @@ const Card = () => {
     return (
         <div className="product-card">
             {
-                data.allProducts.slice(0, 9).map(
+                data.allProducts.map(
                     products => (
                         <div className="product-item">
                             <Link to={"/detail-product/" + products.id} onClick={() => dispatch(setProduct(products))}>

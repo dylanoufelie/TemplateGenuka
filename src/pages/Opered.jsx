@@ -3,34 +3,34 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../services/Message';
 import { setCommande, setTotalPrice } from '../settings/DataSlice';
-import Cart from './Cart'
+import Cart from './Cart';
 
 const Opered = () => {
 
   const data = useSelector((state) => state.data);
   const dispatch = useDispatch();
+  
+  const service = data.paymentService;
 
-  const [mail, setMail] = useState(data.users.user.email)
-  const [phone, setPhone] = useState()
-  const [place, setPlace] = useState()
-  const [MessageComponent, setMessageComponent] = useState(false)
-  // pour recuperer le numero Mtn ou orange money (service et setService)
-  const [service, setService] = useState()
-  const [loader, setLoader] = useState(false)
+  const [mail, setMail] = useState(data.users.user.email);
+  const [phone, setPhone] = useState();
+  const [place, setPlace] = useState();
+  const [MessageComponent, setMessageComponent] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const [headers] = useState({
     Authorization: 'Bearer ' + data.users.access_token,
     Accept: 'application/json',
     ContentType: 'application/json'
-  })
+  });
 
-  let priceTTC = 0
+  let priceTTC = 0;
 
   for (let index = 0; index < data.cart.products.product.length; index++) {
-    priceTTC = data.cart.products.product[index].price * data.cart.products.product[index].quantity
+    priceTTC = data.cart.products.product[index].price * data.cart.products.product[index].quantity;
   }
 
-  dispatch(setTotalPrice(priceTTC))
+  dispatch(setTotalPrice(priceTTC));
 
   function order() {
     setLoader(true);
@@ -178,7 +178,7 @@ const Opered = () => {
           {/* <!-- First name --> */}
           <div class="col-sm-6 col-lg-4">
             <label class="form-label">First name</label>
-            <input type="text" class="form-control" placeholder="Dylan Jardel" /> 
+            <input type="text" class="form-control" placeholder="Dylan Jardel" />
           </div>
           {/* <!-- Last name --> */}
           <div class="col-sm-6 col-lg-4">
@@ -213,9 +213,9 @@ const Opered = () => {
             {/* <!-- Add new email --> */}
           </div>
           {/* <!-- Button  --> */}
-            <div class="col-12 text-center">
-              <button onClick={() => order()} class="btn btn-sm btn-primary mb-0">Buy</button>
-            </div>
+          <div class="col-12" style={{ textAlign: 'center' }}>
+            <button onClick={() => order()} class="btn btn-sm btn-primary mb-0" style={{ padding: '1%', margin: '2%' }}>Buy order</button>
+          </div>
         </div>
       </main>
     )

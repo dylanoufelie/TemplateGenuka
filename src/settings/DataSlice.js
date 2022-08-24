@@ -7,7 +7,8 @@ const initialState = {
     collections: [],
     totalPrice: 0,
     product: null,
-    productSearch: null,
+    productSearch: [],
+    paymentService: null,
     // Collection is variable that contain all products per collections...
     collection: [],
     idProduct: null,
@@ -111,6 +112,9 @@ const dataSlice = createSlice({
         },
         setToken: (state, action) => {
             state.token = action.payload
+        },
+        setpaymentService: (state, action) => {
+            state.paymentService = action.payload
         },
         setCollection: (state, action) => {
             state.collection = action.payload
@@ -223,6 +227,7 @@ export const {
     setCollection,
     setIdProduct,
     setIdCollection,
+    setpaymentService,
     setUsers,
     setMode,
     setCommande,

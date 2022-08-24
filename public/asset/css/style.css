@@ -44,16 +44,16 @@ body {
     width: 2 0%;
 }
 
-.bar-search{
+.bar-search {
     position: absolute;
-    width : 120% ;
+    width: 120%;
     height: 500px;
     background-color: #fff;
     border-radius: 5px;
     z-index: 100000000000000;
     box-shadow: 5px 5px 20px black;
     text-decoration: none;
- }
+}
 
 .nav-link {
     color: white;
@@ -143,18 +143,19 @@ body {
 
 .product-card {
     max-width: 1300px;
-    width: 80%;
+    width: 100%;
     height: auto;
-    margin: 30px auto;
+    margin: 40px auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
+    grid-template-columns: repeat(auto-fill, 400px);
+    justify-items: center;
     justify-content: center;
     grid: 10px;
 }
 
 .product-item {
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin-top: 7%;
+    margin-bottom: 7%;
     margin-left: 2%;
     background: white;
     text-align: center;
@@ -205,6 +206,7 @@ main .card-opered {
 }
 
 /* ----------------- Start Main style ----------------- */
+
 /* ----------------- Start Footer style ----------------- */
 footer {
     width: 100%;
@@ -235,7 +237,98 @@ footer {
     .text_nav {
         margin-top: 20%;
     }
+
     .title_na {
         margin-top: 25%;
+    }
+}
+
+/* -CSS For loader page- */
+
+.containerLoad {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 2%;
+}
+
+.loader {
+    max-width: 5rem;
+    width: 100%;
+    height: auto;
+    stroke-linecap: round;
+}
+
+circle {
+    fill: none;
+    stroke-width: 3.5;
+    -webkit-animation-name: preloader;
+    animation-name: preloader;
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-transform-origin: 170px 170px;
+    transform-origin: 170px 170px;
+    will-change: transform;
+}
+
+circle:nth-of-type(1) {
+    stroke-dasharray: 550;
+}
+
+circle:nth-of-type(2) {
+    stroke-dasharray: 500;
+}
+
+circle:nth-of-type(3) {
+    stroke-dasharray: 450;
+}
+
+circle:nth-of-type(4) {
+    stroke-dasharray: 300;
+}
+
+circle:nth-of-type(1) {
+    -webkit-animation-delay: -0.15s;
+    animation-delay: -0.15s;
+}
+
+circle:nth-of-type(2) {
+    -webkit-animation-delay: -0.3s;
+    animation-delay: -0.3s;
+}
+
+circle:nth-of-type(3) {
+    -webkit-animation-delay: -0.45s;
+    -moz-animation-delay: -0.45s;
+    animation-delay: -0.45s;
+}
+
+circle:nth-of-type(4) {
+    -webkit-animation-delay: -0.6s;
+    -moz-animation-delay: -0.6s;
+    animation-delay: -0.6s;
+}
+
+@-webkit-keyframes preloader {
+    50% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes preloader {
+    50% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
