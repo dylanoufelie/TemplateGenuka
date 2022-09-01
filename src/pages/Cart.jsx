@@ -48,10 +48,11 @@ const Cart = () => {
                               {/* <!-- Image --> */}
                               <div className="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                 {
-                                  item.image.lenght > 0 ?
-                                    <img src={item.image.link} alt="imageProduct" className="w-100" />
-                                    :
+                                  (item.image.length !== 0 && (
+                                    <img src={item.image[0].link} alt="imageProduct" className="w-100" />
+                                  )) || (
                                     <img src='asset\image\product\productDefaut.png' alt="imageProduct" className="w-100" />
+                                  )
                                 }
                                 <Link to="#!">
                                   <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.2)' }}></div>
@@ -61,7 +62,7 @@ const Cart = () => {
 
                             <div className="col-lg-5 col-md-6 mb-4 mb-lg-0">
                               {/* <!-- Data --> */}
-                              <p><strong>{item.price} {data.company.currency.symbole}</strong></p>
+                              <p><strong>{item.price} {data.company.currency.symbol}</strong></p>
                               <p>{item.name}</p>
                               <p>collection</p>
                               <button className="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
@@ -91,7 +92,7 @@ const Cart = () => {
                                 </button>
                               </div>
                               <p className="text-start text-md-center">
-                                <strong>{data.company.currency.symbole} {item.price * item.quantity}</strong>
+                                <strong>{data.company.currency.symbol} {item.price * item.quantity}</strong>
                               </p>
                             </div>
                           </div>

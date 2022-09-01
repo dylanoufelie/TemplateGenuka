@@ -2,6 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
+    loader: false,
     company: null,
     allProducts: [],
     collections: [],
@@ -151,6 +152,9 @@ const dataSlice = createSlice({
                 }
             }
         },
+        setLoader: (state, action) => {
+            state.loader = action.action
+        },
         deleteToCart: (state, action) => {
             let item = [], nbre = 0
             for (let index = 0; index < state.cart.products.total; index++) {
@@ -166,47 +170,48 @@ const dataSlice = createSlice({
             }
         },
         addProductToCart: (state, action) => {
-            state.cart.products.product[state.cart.products.total] = action.payload
+            state.cart.products.product[state.cart.products.total] = action.payload;
         },
         addTotalCart: (state) => {
-            state.cart.products.total++
+            state.cart.products.total++;
         },
 
         addCart: (state, action) => {
-            let nbr = 0
+            let nbr = 0;
 
             if (state.cart.products.total === 0) {
 
-                let item = {}
-                item.name = action.payload.name
-                item.id = action.payload.id
-                item.quantity = 1
-                item.price = action.payload.price
-                item.image = action.payload.medias
+                let item = {};
+                item.name = action.payload.name;
+                item.id = action.payload.id;
+                item.quantity = 1;
+                item.price = action.payload.price;
+                item.image = action.payload.medias;
 
-                console.log(item)
                 addProductToCart(item)
-                addTotalCart(item.quantity)
+                addTotalCart()
+                
             } else {
                 for (let index = 0; index < state.cart.products.total; index++) {
                     if (state.cart.products.product[index].id === action.payload.id) {
-                        setQuantity(action.payload)
-                        nbr++
+                        setQuantity(action.payload);
+                        nbr++;
                     }
                 }
 
                 if (nbr === 0) {
 
-                    let item = {}
-                    item.name = action.payload.name
-                    item.id = action.payload.id
-                    item.quantity = 1
-                    item.price = action.payload.price
-                    item.image = action.payload.medias
+                    let item = {};
+                    item.name = action.payload.name;
+                    item.id = action.payload.id;
+                    item.quantity = 1;
+                    item.price = action.payload.price;
+                    item.image = action.payload.medias;
 
-                    addProductToCart(item)
-                    addTotalCart()
-                    console.log(item)
+                    addProductToCart(item);
+                    addTotalCart();
+                    
+                console.log("cart+ :", item)
                 }
             }
         },
@@ -215,6 +220,7 @@ const dataSlice = createSlice({
 
 export const {
     setCompany,
+    setLoader,
     setLogin,
     setAllProducts,
     addProducts,

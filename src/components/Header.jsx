@@ -1,19 +1,27 @@
 import { Link } from 'react-router-dom';
 import Auth from '../context/Auth';
 import { logout } from '../services/AuthApi';
-import React, { useContext, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLoader } from '../settings/DataSlice';
 
 
 const Header = () => {
 
     const { isAuthenticated, setIsAuthenticated } = useContext(Auth);
+
     const data = useSelector((state) => state.data);
-    const [loader, setLoader] = useState(false)
+    const dispatch = useDispatch();
+
     const handleLogout = () => {
+        dispatch(setLoader(true))
         logout()
         setIsAuthenticated(false)
+        dispatch(setLoader(false))
     }
+
+    let loader = data.loader;
+
 
     return (
         <header className="header_home">
@@ -59,13 +67,13 @@ const Header = () => {
                                             <Link to={'#'} className="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogin" tabindex="-1" aria-disabled="true"><i className="fa-solid fa-user" title='Login'></i></Link>
                                         </li>
                                     </>
-                                )) || ((
+                                )) || (
                                     <>
                                         <li className="nav-item active">
                                             <button onClick={handleLogout} className="btn nav-link" ariacurrent="page"><i class="fa-solid fa-power-off" title='Log Out'></i></button>
                                         </li>
                                     </>
-                                ))}
+                                )}
                             </ul>
                         </div>
                     </div>

@@ -12,6 +12,8 @@ const Home = () => {
     const [page, setPage] = useState([]);
     const dispatch = useDispatch();
 
+    console.log("products :", data.allProducts.links)
+
     function pagination(url) {
         axios
             .get(url)
@@ -21,19 +23,19 @@ const Home = () => {
             .get(url)
             .then((response) => {
                 setPage(response.data.links)
-                console.log(response.data.links)
+                console.log('pagination response :',response.data.links)
                 if (response.data.links.next == null) {
-                    document.getElementById("next")?.classList.add("disabled")
-                    document.getElementById("previous")?.classList.add("active")
+                    document.getElementById("next")?.classList.add("disabled");
+                    document.getElementById("previous")?.classList.add("active");
                 } else {
-                    document.getElementById("next")?.classList.remove("disabled")
-                    document.getElementById("previous")?.classList.remove("active")
+                    document.getElementById("next")?.classList.remove("disabled");
+                    document.getElementById("previous")?.classList.remove("active");
                 }
 
                 if (response.data.links.prev == null) {
-                    document.getElementById("previous")?.classList.add("disabled")
+                    document.getElementById("previous")?.classList.add("disabled");
                 } else {
-                    document.getElementById("previous")?.classList.remove("disabled")
+                    document.getElementById("previous")?.classList.remove("disabled");
                 }
             })
             .catch((error) => console.log(error))

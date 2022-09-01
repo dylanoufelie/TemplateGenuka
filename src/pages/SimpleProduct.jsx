@@ -1,11 +1,23 @@
+import axios from 'axios';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { addCart } from '../settings/DataSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { addCart, setProduct } from '../settings/DataSlice';
 
 const SimpleProduct = () => {
 
     const data = useSelector((state) => state.data);
+    const dispatch = useDispatch();
+    const id = useParams().id;
+
+    if (data.product === null) {
+        axios
+            .get(data.api + "companies/" + data.company.id + "/products/" + id)
+            .then((response) => {
+                dispatch(setProduct(response.data))
+                console.log("single product :", response.data)
+            })
+    }
 
     setTimeout(function () {
         let desc = document.getElementById('desc');
@@ -31,8 +43,10 @@ const SimpleProduct = () => {
                                         <div class="images p-3">
                                             <div class="text-center p-4">
                                                 {
-                                                    data.product.medias.slice(0, 1).map(
-                                                        image => (<img id="main-image" src={image.thumb} width={"100%"} alt="" />)
+                                                    (data.product.medias.lenght !== 0 &&
+                                                        (<img id="main-image" src={data.product.medias.thumb} width={"100%"} alt="" />)
+                                                    ) || (
+                                                        <img id="main-image" src='asset\image\product\productDefaut.png' width={"100%"} alt="" />
                                                     )
                                                 }
                                             </div>

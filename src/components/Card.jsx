@@ -26,38 +26,39 @@ const Card = () => {
         if (data.cart.products.total === 0) {
             let item = {}
 
-            item.name = products.name
-            item.id = products.id
-            item.quantity = 1
-            item.price = products.price
-            item.image = products.medias
+            item.name = products.name;
+            item.id = products.id;
+            item.quantity = 1;
+            item.price = products.price;
+            item.image = products.medias;
 
-            dispatch(addProductToCart(item))
-            dispatch(addTotalCart())
+            dispatch(addProductToCart(item));
+            dispatch(addTotalCart());
+
+            console.log("total:", addProductToCart(item))
 
         } else {
             for (let index = 0; index < data.cart.products.total; index++) {
                 if (data.cart.products.product[index].id === products.id) {
-                    dispatch(setQuantity(products))
-                    nbr++
+                    dispatch(setQuantity(products));
+                    nbr++;
                 }
             }
 
             if (nbr === 0) {
-                let item = {}
+                let item = {};
 
-                item.name = products.name
-                item.id = products.id
-                item.quantity = 1
-                item.price = products.price
-                item.image = products.medias
+                item.name = products.name;
+                item.id = products.id;
+                item.quantity = 1;
+                item.price = products.price;
+                item.image = products.medias;
 
-                dispatch(addProductToCart(item))
-                dispatch(addTotalCart())
+                dispatch(addProductToCart(item));
+                dispatch(addTotalCart());
 
             }
         }
-        console.log(products)
     }
 
 
@@ -90,4 +91,4 @@ const Card = () => {
     )
 }
 
-export default Card
+export default Card;

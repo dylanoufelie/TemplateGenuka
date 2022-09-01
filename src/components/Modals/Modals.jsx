@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Auth from '../../context/Auth';
 import { login, registed } from '../../services/AuthApi';
-import { setUsers } from '../../settings/DataSlice';
+import { setLoader, setUsers } from '../../settings/DataSlice';
 
 const Modals = () => {
 
@@ -22,15 +22,13 @@ const Modals = () => {
   }
 
   const handleSubmitRegister = async event => {
+    dispatch(setLoader(true))
     event.preventDefault();
     try {
       axios
         .post(data.api + "clients/register", user)
-        .then(response => dispatch(setUsers(response.data))
-        ).then(data => alert('success'))
-
-        console.log('User :', data.users)
-
+        .then(response => dispatch(setUsers(response.data), setLoader(false)))
+        
       const statut = await registed(user)
       setIsAuthenticated(statut)
     } catch (error) {
@@ -42,6 +40,7 @@ const Modals = () => {
   }
 
   const handleSubmitLogin = async event => {
+    dispatch(setLoader(true))
     event.preventDefault();
 
     try {
@@ -53,6 +52,7 @@ const Modals = () => {
       
         const response = await login(user)
       setIsAuthenticated(response)
+      dispatch(setLoader(false))
 
     } catch ({ response }) {
       console.log(response)

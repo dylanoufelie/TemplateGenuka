@@ -43,15 +43,22 @@ const Search = () => {
                             <input className="form-control me-2" type="search" onChange={(e) => setItemSearch(e.target.value)} placeholder="Search..." aria-label="Search" />
                             <button className="btn btn-warning" onClick={() => searchProducts()}><i className="fa-solid fa-magnifying-glass"></i></button>
                         </nav>
-                        <div class="modal-body" style={{ textAlign: 'center' }}>
+                        <div class="modal-body overflow" style={{ textAlign: 'center' }}>
                             {!loader ? (<LoadingPage />) : (<> {data.productSearch.map(
                                 result => (
-                                    <Link to={'/detail-product/' + result.id} onClick={() => dispatch(setProduct(result))}>
-                                        <p> {result.name} </p>
-                                        <hr />
+                                    <Link to={'/detail-product/' + result.id} onClick={() => dispatch(setProduct(result))}
+                                        style={{
+                                            textDecoration: 'none', color: 'black',
+                                            fontSize: '1.1rem', letterSpacing: '1px'
+                                        }}>
+                                        <p>
+                                            <b>{result.name}</b>
+                                            {/* <i style={{ letterSpacing: '0' }}>"{result.tags[0].name}"</i> */}
+                                            <hr />
+                                        </p>
                                     </Link>))
-                                }
-                                </>)
+                            }
+                            </>)
                             }
                         </div>
                     </div>
