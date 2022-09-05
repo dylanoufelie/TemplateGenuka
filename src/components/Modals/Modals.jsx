@@ -7,7 +7,7 @@ import { setLoader, setUsers } from '../../settings/DataSlice';
 
 const Modals = () => {
 
-  const data = useSelector((state) => state.data);
+  const data = useSelector((state) => state);
   const dispatch = useDispatch()
   const { setIsAuthenticated } = useContext(Auth);
 

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 const Blogs = () => {
 
-    const data = useSelector((state) => state.data)
+    const data = useSelector((state) => state)
 
     return (
         <React.Fragment>

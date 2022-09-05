@@ -3,12 +3,12 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LoadingPage from '../Loading/LoadingPage';
-import { setProduct, setProductSearch } from '../../settings/DataSlice';
+import { setCompany, setProduct, setProductSearch } from '../../settings/DataSlice';
 
 
 const Search = () => {
 
-    const data = useSelector((state) => state.data);
+    const data = useSelector((state) => state);
     const dispatch = useDispatch();
     const [itemSearch, setItemSearch] = useState([]);
     const [loader, setLoader] = useState(true);
@@ -19,11 +19,16 @@ const Search = () => {
             axios
                 .post(data.api + 'companies/' + data.company.id + '/products/search?q=' + itemSearch)
                 .then((result) => {
-                    console.log('Search :', result.data)
-                    dispatch(setProductSearch(result.data))
+                    if (result.data == null) {
+                        // code here...
+                    } else {
+                        console.log('Search :', result.data)
+                        dispatch(setProductSearch(result.data))
+                    }
                     setLoader(true)
                 }).catch((err) => {
                     console.log(err)
+                    dispatch(setCompany(-404))
                 });
         } else {
             dispatch(setProductSearch([]))

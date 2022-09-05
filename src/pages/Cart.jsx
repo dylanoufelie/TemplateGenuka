@@ -7,7 +7,7 @@ import { deleteToCart, setMode, setQuantity, setRemoveQuantity } from '../settin
 const Cart = () => {
 
   const { isAuthenticated } = useContext(Auth)
-  const data = useSelector((state) => state.data)
+  const data = useSelector((state) => state)
   const dispatch = useDispatch()
 
   let prixTotal = 0

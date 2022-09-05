@@ -6,7 +6,7 @@ import { addCart, addProductToCart, addTotalCart, setProduct, setAllProducts, se
 
 const Card = () => {
 
-    const data = useSelector((state) => state.data);
+    const data = useSelector((state) => state);
     const dispatch = useDispatch();
 
     useEffect(
@@ -14,7 +14,7 @@ const Card = () => {
             axios
                 .get(data.api + "companies/" + data.company.id + "/products")
                 .then((response) => {dispatch(setAllProducts(response.data.data))
-                    console.log('all products :', response.data.links)
+                  //  console.log('all products :', response.data.links)
                 })
         }, []
     );

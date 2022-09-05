@@ -2,22 +2,32 @@ import { Link } from 'react-router-dom';
 import Auth from '../context/Auth';
 import { logout } from '../services/AuthApi';
 import React, { useContext } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { setLoader } from '../settings/DataSlice';
+import LoadingPage from './Loading/LoadingPage';
+import Message from '../services/Message';
+import { useState } from 'react';
 
 
 const Header = () => {
 
     const { isAuthenticated, setIsAuthenticated } = useContext(Auth);
+    const [message, setMessage] = useState(null);
 
-    const data = useSelector((state) => state.data);
-    const dispatch = useDispatch();
+    const data = useSelector((state) => state);
 
     const handleLogout = () => {
-        dispatch(setLoader(true))
+        setMessage(
+            <Message 
+                message={'Vous avez été déconnecté(e) avez succes !'}
+                error={false}
+                setCompMess={setMessage}
+            />
+        )
+        setLoader(true)
         logout()
         setIsAuthenticated(false)
-        dispatch(setLoader(false))
+        setLoader(false)
     }
 
     let loader = data.loader;
@@ -25,6 +35,7 @@ const Header = () => {
 
     return (
         <header className="header_home">
+            {message}
             <nav className="navbar navbar-expand-lg navbar-light">
                 <div className="main_nav fixed-top">
                     <div className="logo-compagny">
@@ -59,6 +70,7 @@ const Header = () => {
                                     <Link to={'/cart'} className="nav-link" aria-current="page"><i className="fa-solid fa-cart-shopping"></i></Link>
                                 </li>
                                 {(!isAuthenticated && (
+                                    ( loader && 
                                     <>
                                         <li className="nav-item active">
                                             <Link to={'#'} className="nav-link" data-bs-toggle="modal" data-bs-target="#modalCreateEvents" tabindex="-1" aria-disabled="true"><i className="fa-solid fa-registered" title='Register'></i></Link>
@@ -67,7 +79,8 @@ const Header = () => {
                                             <Link to={'#'} className="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogin" tabindex="-1" aria-disabled="true"><i className="fa-solid fa-user" title='Login'></i></Link>
                                         </li>
                                     </>
-                                )) || (
+                                    ) || ( <LoadingPage /> ) )
+                                ) || (
                                     <>
                                         <li className="nav-item active">
                                             <button onClick={handleLogout} className="btn nav-link" ariacurrent="page"><i class="fa-solid fa-power-off" title='Log Out'></i></button>

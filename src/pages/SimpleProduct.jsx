@@ -6,7 +6,7 @@ import { addCart, setProduct } from '../settings/DataSlice';
 
 const SimpleProduct = () => {
 
-    const data = useSelector((state) => state.data);
+    const data = useSelector((state) => state);
     const dispatch = useDispatch();
     const id = useParams().id;
 
@@ -43,11 +43,9 @@ const SimpleProduct = () => {
                                         <div class="images p-3">
                                             <div class="text-center p-4">
                                                 {
-                                                    (data.product.medias.lenght !== 0 &&
-                                                        (<img id="main-image" src={data.product.medias.thumb} width={"100%"} alt="" />)
-                                                    ) || (
-                                                        <img id="main-image" src='asset\image\product\productDefaut.png' width={"100%"} alt="" />
-                                                    )
+                                                    data.product.medias[0].lenght > 0 ? <img id="main-image" src={data.product.medias[0].thumb} width={"100%"} alt="image default product" />
+                                                        : <img id="main-image" src='asset\image\product\productDefaut.png' width={"100%"} alt="image indisponible" />
+
                                                 }
                                             </div>
                                         </div>

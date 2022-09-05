@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 const Footer = () => {
 
-    const data = useSelector((state) => state.data);
+    const data = useSelector((state) => state);
     const company = data.company;
 
     return (

@@ -8,11 +8,11 @@ import { setAllProducts } from '../settings/DataSlice'
 
 const Home = () => {
 
-    const data = useSelector((state) => state.data);
+    const data = useSelector((state) => state);
     const [page, setPage] = useState([]);
     const dispatch = useDispatch();
 
-    console.log("products :", data.allProducts.links)
+   // console.log("products :", data.allProducts.links)
 
     function pagination(url) {
         axios

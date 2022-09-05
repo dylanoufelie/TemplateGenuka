@@ -332,3 +332,52 @@ circle:nth-of-type(4) {
         transform: rotate(360deg);
     }
 }
+
+/*------------------------css message info------------------------*/
+
+.infoMessage-success{
+    position: absolute;
+    z-index: 99999999999999;
+    display: flex;
+    justify-content: center;
+    /* transform: translate(-50%); */
+    top: -100%;
+    left: 28%;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+    background-color: #0af564;
+    color: #fff;
+    animation: anime 5s forwards linear;
+    margin: auto;
+}
+.infoMessage-error{
+    position: absolute;
+    z-index: 99999999999999;
+    display: flex;
+    justify-content: center;
+    /* transform: translate(-50%); */
+    top: -100%;
+    left: 28%;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+    background-color: #f52e0a;
+    color: #fff;
+    animation: anime 5s forwards linear;
+    margin: auto;
+}
+@keyframes anime {
+    0% {
+        top: -100%;
+    }
+    20% {
+        top: 0px;
+    }
+    55% {
+        top: 0px;
+    }
+    100% {
+        top: -100%;
+    }
+}

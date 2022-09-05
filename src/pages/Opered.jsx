@@ -7,7 +7,7 @@ import Cart from './Cart';
 
 const Opered = () => {
 
-  const data = useSelector((state) => state.data);
+  const data = useSelector((state) => state);
   const dispatch = useDispatch();
   
   const service = data.paymentService;

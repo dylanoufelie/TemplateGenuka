@@ -19,32 +19,36 @@ import Modals from '../Modals/Modals';
 
 export default function Check() {
 
-  const data = useSelector((state) => state.data);
+  const data = useSelector((state) => state);
   const dispatch = useDispatch();
 
   async function getCompany() {
-    if (data.company === null) {
+    try {
+
+      // if (data.company === null) {
       dispatch(setLogin("company"));
       axios
-        .get(data.api + "companies/details/2")    // /byurl?url=" + domaine ) 430
+        .get(data.api + "companies/details/2")    // /byurl?url=" + data.url) // id = 430 for test order...
         .then((response) => {
           if (response.status === 200) {
             const website = response.data
             dispatch(setCompany(website))
           }
           else {
-            company.id = -404
+            data.company = -404
           }
-          console.log(response.data)
         })
+      // }
+    } catch (error) {
+      dispatch(setCompany(-404))
     }
   }
 
   getCompany()
-  const company = data.company
-  return company === null ? <LoadingInit /> : company.id === -404 ? <Error404 /> :
+  return data.company === null ? <LoadingInit /> : data.company === -404 ? <Error404 /> :
     (
       <BrowserRouter>
+
         <Header />
 
         <Routes>
@@ -56,12 +60,13 @@ export default function Check() {
           <Route path='/detail-product/:id' element={<SimpleProduct />} />
         </Routes>
 
-      {/* Modals */}
+        {/* Modals */}
         <Search />
         <Modals />
-      {/* End Modals */}
-      
+        {/* End Modals */}
+
         <Footer />
+
       </BrowserRouter>
     )
 }
