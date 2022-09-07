@@ -43,8 +43,9 @@ const SimpleProduct = () => {
                                         <div class="images p-3">
                                             <div class="text-center p-4">
                                                 {
-                                                    data.product.medias[0].lenght > 0 ? <img id="main-image" src={data.product.medias[0].thumb} width={"100%"} alt="image default product" />
-                                                        : <img id="main-image" src='asset\image\product\productDefaut.png' width={"100%"} alt="image indisponible" />
+                                                    <img id="main-image" src={data.product.medias[0].thumb} width={"100%"} alt="image default product" />
+                                                    // data.product.medias[0].lenght > 0 ? <img id="main-image" src={data.product.medias[0].thumb} width={"100%"} alt="image default product" />
+                                                    //     : <img id="main-image" src='asset\image\product\productDefaut.png' width={"100%"} alt="image indisponible" />
 
                                                 }
                                             </div>

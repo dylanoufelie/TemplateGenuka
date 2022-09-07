@@ -3,7 +3,8 @@ import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Auth from '../../context/Auth';
 import { login, registed } from '../../services/AuthApi';
-import { setLoader, setUsers } from '../../settings/DataSlice';
+import Message from '../../services/Message';
+import { setLoader, setMessageHandle, setUsers } from '../../settings/DataSlice';
 
 const Modals = () => {
 
@@ -22,40 +23,126 @@ const Modals = () => {
   }
 
   const handleSubmitRegister = async event => {
-    dispatch(setLoader(true))
     event.preventDefault();
+
     try {
+      dispatch(setLoader(true))
       axios
         .post(data.api + "clients/register", user)
-        .then(response => dispatch(setUsers(response.data), setLoader(false)))
-        
+        .then((result) => {
+          dispatch(setUsers(result.data), setLoader(false), setMessageHandle(
+            <Message
+              message={'Inscription reussie !'}
+              error={false}
+              setCompMess={setMessageHandle}
+            />))
+        }).catch((err) => {
+          if (err.message === 'Network Error') {
+            dispatch(setMessageHandle(
+              <Message
+                message={'pas de connexion !'}
+                error={true}
+                setCompMess={setMessageHandle}
+              />
+            ))
+          } else {
+            dispatch(setMessageHandle(
+              <Message
+                message={'problème de reseau, veuillez recommencé !'}
+                error={true}
+                setCompMess={setMessageHandle}
+              />
+            ))
+          }
+        });
+
       const statut = await registed(user)
+      dispatch(setLoader(false))
       setIsAuthenticated(statut)
     } catch (error) {
       console.log(error);
-      // if (error.message) {
-      //   alert(error.message)
-      // }
+      if (error.message === 'Network Error') {
+        dispatch(setMessageHandle(
+          <Message
+            message={'pas de connexion !'}
+            error={true}
+            setCompMess={setMessageHandle}
+          />
+        ))
+      } else {
+        dispatch(setMessageHandle(
+          <Message
+            message={'problème de reseau, veuillez recommencé !'}
+            error={true}
+            setCompMess={setMessageHandle}
+          />
+        ))
+      }
     }
   }
 
   const handleSubmitLogin = async event => {
-    dispatch(setLoader(true))
     event.preventDefault();
 
     try {
+      dispatch(setLoader(true))
       axios
         .post(data.api + "clients/login", user)
-        .then(response => dispatch(setUsers(response.data)),
-          console.log('user login :',data.users)
-        )
-      
-        const response = await login(user)
-      setIsAuthenticated(response)
-      dispatch(setLoader(false))
+        .then(response => {
+          dispatch(setUsers(response.data))
+          dispatch(setLoader(false))
+          dispatch(setMessageHandle(
+            <Message
+              message={"Connexion a été reussie"}
+              error={false}
+              setCompMess={setMessageHandle}
+            />
+          ))
+          console.log('user login :', data.user)
+        }
+        ).catch((error) => {
+          if (error.message === 'Network Error') {
+            dispatch(setMessageHandle(
+              <Message
+                message={'pas de connexion !'}
+                error={true}
+                setCompMess={setMessageHandle}
+              />
+            ))
+          } else {
+            dispatch(setMessageHandle(
+              <Message
+                message={'problème de reseau, veuillez recommencé !'}
+                error={true}
+                setCompMess={setMessageHandle}
+              />
+            ))
+          }
+        })
 
-    } catch ({ response }) {
-      console.log(response)
+      dispatch(setLoader(false))
+      const response = await login(user)
+      setIsAuthenticated(response)
+
+    } catch ({ error }) {
+      console.log(error)
+      if (error.message === 'Network Error') {
+        dispatch(setMessageHandle(
+          <Message
+            message={'pas de connexion !'}
+            error={true}
+            setCompMess={setMessageHandle}
+          />
+        ))
+      } else {
+        dispatch(setMessageHandle(
+          <Message
+            message={'problème de reseau, veuillez recommencé !'}
+            error={true}
+            setCompMess={setMessageHandle}
+          />
+        ))
+      }
     }
   }
 

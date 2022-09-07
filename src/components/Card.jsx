@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import { addCart, addProductToCart, addTotalCart, setProduct, setAllProducts, setQuantity } from '../settings/DataSlice'
+import { addCart, addProductToCart, addTotalCart, setProduct, setAllProducts, setQuantity, setMessageHandle } from '../settings/DataSlice'
+import Message from '../services/Message';
 
 const Card = () => {
 
@@ -13,8 +14,9 @@ const Card = () => {
         () => {
             axios
                 .get(data.api + "companies/" + data.company.id + "/products")
-                .then((response) => {dispatch(setAllProducts(response.data.data))
-                  //  console.log('all products :', response.data.links)
+                .then((response) => {
+                    dispatch(setAllProducts(response.data.data))
+                    //  console.log('all products :', response.data.links)
                 })
         }, []
     );
@@ -33,7 +35,13 @@ const Card = () => {
             item.image = products.medias;
 
             dispatch(addProductToCart(item));
-            dispatch(addTotalCart());
+            dispatch(addTotalCart(), setMessageHandle(
+                <Message
+                    message={'this product has been added successfuly'}
+                    error={false}
+                    setCompMess={setMessageHandle}
+                />
+            ));
 
             console.log("total:", addProductToCart(item))
 
@@ -74,7 +82,7 @@ const Card = () => {
                                         <img className="image_product" src={products.medias[0].link} id="image_product" alt=""
                                             title='View detail product' width={'100%'} height={'245px'} />
                                         :
-                                        <img className="image_product" src='asset\image\product\productDefaut.png' id="image_product" 
+                                        <img className="image_product" src='asset\image\product\productDefaut.png' id="image_product"
                                             alt={products.name} title='View detail product' width={'100%'} height={'245px'} />
                                 }
                             </Link>

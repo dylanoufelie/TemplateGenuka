@@ -37,6 +37,7 @@ const Header = () => {
         <header className="header_home">
             {message}
             <nav className="navbar navbar-expand-lg navbar-light">
+              {/* {data.messageHandle} */}
                 <div className="main_nav fixed-top">
                     <div className="logo-compagny">
                         <Link className="navbar-brand" to={'/'}><img src={data.company.logo} width='3%' height={'3%'} style={{ margin: '1%' }} alt='logo compagny' />{data.company.name}</Link>
@@ -70,7 +71,7 @@ const Header = () => {
                                     <Link to={'/cart'} className="nav-link" aria-current="page"><i className="fa-solid fa-cart-shopping"></i></Link>
                                 </li>
                                 {(!isAuthenticated && (
-                                    ( loader && 
+                                    ( !loader && 
                                     <>
                                         <li className="nav-item active">
                                             <Link to={'#'} className="nav-link" data-bs-toggle="modal" data-bs-target="#modalCreateEvents" tabindex="-1" aria-disabled="true"><i className="fa-solid fa-registered" title='Register'></i></Link>
@@ -78,8 +79,8 @@ const Header = () => {
                                         <li className="nav-item active">
                                             <Link to={'#'} className="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogin" tabindex="-1" aria-disabled="true"><i className="fa-solid fa-user" title='Login'></i></Link>
                                         </li>
-                                    </>
-                                    ) || ( <LoadingPage /> ) )
+                                    </>)
+                                    ) || ( <LoadingPage /> ) 
                                 ) || (
                                     <>
                                         <li className="nav-item active">

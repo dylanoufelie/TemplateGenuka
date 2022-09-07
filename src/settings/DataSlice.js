@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     loader: false,
+    messageHandle: '',
     company: null,
     allProducts: [],
     collections: [],
@@ -121,6 +122,9 @@ const dataSlice = createSlice({
         },
         setIdProduct: (state, action) => {
             state.idProduct = action.payload
+        },
+        setMessageHandle:(state, action) => {
+            state.messageHandle = action.payload
         },
         setIdCollection: (state, action) => {
             state.idCollection = action.payload
@@ -243,7 +247,8 @@ export const {
     addProductToCart,
     deleteToCart,
     setRemoveQuantity,
-    setCart, 
+    setCart,
+    setMessageHandle,
     getCompany 
 } = dataSlice.actions;
 
