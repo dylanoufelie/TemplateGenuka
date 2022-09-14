@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { addCart, setCollection, setCollections, setProduct } from '../settings/DataSlice';
+import { addCart, addProductToCart, addTotalCart, setCollection, setCollections, setProduct, setQuantity } from '../settings/DataSlice';
 import LoadingPage from './Loading/LoadingPage';
+import Message from '../services/Message';
 
 const Collection = () => {
 
   const dataGlobal = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [loader, setLoader] =useState(false);
+  const [loader, setLoader] = useState(false);
+  const [messageAlt, setMessageAlt] = useState(null);
 
   const [dppgination, setPgniation] = useState([]);
 
   //  Function list products per Collection via global data that name equals to collection (collection = product_per_collection)
   function productPerCollection(id) {
     setLoader(true)
-    
+
     axios
       .get(dataGlobal.api + "companies/" + dataGlobal.company.id + "/collections/" + id)
       .then((response) => {
@@ -45,6 +47,60 @@ const Collection = () => {
         });
     }, []
   );
+
+  // 
+
+  function addToCart(products) {
+
+    let nbr = 0
+
+    if (dataGlobal.cart.products.total === 0) {
+      let item = {}
+
+      item.name = products.name;
+      item.id = products.id;
+      item.quantity = 1;
+      item.price = products.price;
+      item.image = products.medias;
+
+      dispatch(addProductToCart(item));
+      dispatch(addTotalCart())
+       setMessageAlt(
+        <Message
+          message={'this product has been added successfuly'}
+          error={false}
+          setCompMess={setMessageAlt}
+        />
+      );
+
+      console.log("total:", addProductToCart(item))
+
+    } else {
+      for (let index = 0; index < dataGlobal.cart.products.total; index++) {
+        if (dataGlobal.cart.products.product[index].id === products.id) {
+          dispatch(setQuantity(products));
+          nbr++;
+        }
+      }
+
+      if (nbr === 0) {
+        let item = {};
+
+        item.name = products.name;
+        item.id = products.id;
+        item.quantity = 1;
+        item.price = products.price;
+        item.image = products.medias;
+
+        dispatch(addProductToCart(item));
+        dispatch(addTotalCart());
+
+      }
+    }
+  }
+
+
+  // 
 
   // From show the product of next page
   function pagination(url) {
@@ -75,7 +131,7 @@ const Collection = () => {
 
   return (
     <React.Fragment>
-
+      {messageAlt}
       {/* List Collection */}
       <div className="menu-main"
         style={{ width: '700px' }}>
@@ -109,27 +165,27 @@ const Collection = () => {
         {
           // (!loader && (<LoadingPage/>)
           // ) || (
-            dataGlobal.collection.slice(0, 10).map(
-              dProduct => (
-                <div className="product-item">
-                  <Link to={'/detail-product/' + dProduct.id}
-                    onClick={() => dispatch(setProduct(dProduct))}>
-                    {
-                      dProduct.medias.length > 0 ?
-                        <img className="image_product" src={dProduct.medias[0].link} id="image_product" alt=""
-                          title='View detail product' width={'100%'} height={'245px'} />
-                        :
-                        <img className="image_product" src='asset\image\product\productDefaut.png' id="image_product" alt={dProduct.name}
-                          title='View detail product' width={'100%'} height={'245px'} />
-                    }
-                  </Link>
-                  <div className="price_product">
-                    <h6>{dProduct.name}</h6>
-                    <h5>{dProduct.price} <b>{dataGlobal.company.currency.symbol}</b></h5>
-                  </div><button onClick={() => dispatch(addCart(dProduct))} className="panier_product" >Add to cart</button>
-                </div>
-              )
+          dataGlobal.collection.slice(0, 10).map(
+            dProduct => (
+              <div className="product-item">
+                <Link to={'/detail-product/' + dProduct.id}
+                  onClick={() => dispatch(setProduct(dProduct))}>
+                  {
+                    dProduct.medias.length > 0 ?
+                      <img className="image_product" src={dProduct.medias[0].link} id="image_product" alt=""
+                        title='View detail product' width={'100%'} height={'245px'} />
+                      :
+                      <img className="image_product" src='asset\image\product\productDefaut.png' id="image_product" alt={dProduct.name}
+                        title='View detail product' width={'100%'} height={'245px'} />
+                  }
+                </Link>
+                <div className="price_product">
+                  <h6>{dProduct.name}</h6>
+                  <h5>{dProduct.price} <b>{dataGlobal.company.currency.symbol}</b></h5>
+                </div><button onClick={() => addToCart(dProduct)} className="panier_product" >Add to cart</button>
+              </div>
             )
+          )
           // )
         }
       </div>

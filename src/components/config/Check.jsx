@@ -28,7 +28,7 @@ export default function Check() {
       // if (data.company === null) {
       dispatch(setLogin("company"));
       axios
-        .get(data.api + "companies/details/2")    // /byurl?url=" + data.url) // id = 430 for test order...
+        .get(data.api + "companies/details/430")    // /byurl?url=" + data.url) // id = 430 for test order...
         .then((response) => {
           if (response.status === 200) {
             const website = response.data

@@ -24,67 +24,28 @@ const Modals = () => {
 
   const handleSubmitRegister = async event => {
     event.preventDefault();
-
     try {
-      dispatch(setLoader(true))
       axios
         .post(data.api + "clients/register", user)
-        .then((result) => {
-          dispatch(setUsers(result.data), setLoader(false), setMessageHandle(
-            <Message
-              message={'Inscription reussie !'}
-              error={false}
-              setCompMess={setMessageHandle}
-            />))
-        }).catch((err) => {
-          if (err.message === 'Network Error') {
-            dispatch(setMessageHandle(
-              <Message
-                message={'pas de connexion !'}
-                error={true}
-                setCompMess={setMessageHandle}
-              />
-            ))
-          } else {
-            dispatch(setMessageHandle(
-              <Message
-                message={'problème de reseau, veuillez recommencé !'}
-                error={true}
-                setCompMess={setMessageHandle}
-              />
-            ))
-          }
-        });
+        .then(response => dispatch(setUsers(response.data))
+        ).then(data => alert('success'))
+
+        console.log('User :', data.users)
 
       const statut = await registed(user)
-      dispatch(setLoader(false))
       setIsAuthenticated(statut)
     } catch (error) {
       console.log(error);
-      if (error.message === 'Network Error') {
-        dispatch(setMessageHandle(
-          <Message
-            message={'pas de connexion !'}
-            error={true}
-            setCompMess={setMessageHandle}
-          />
-        ))
-      } else {
-        dispatch(setMessageHandle(
-          <Message
-            message={'problème de reseau, veuillez recommencé !'}
-            error={true}
-            setCompMess={setMessageHandle}
-          />
-        ))
-      }
+      // if (error.message) {
+      //   alert(error.message)
+      // }
     }
   }
 
   const handleSubmitLogin = async event => {
     event.preventDefault();
-
     try {
+      console.log('dddddddddddddddddddd')
       dispatch(setLoader(true))
       axios
         .post(data.api + "clients/login", user)
@@ -98,10 +59,12 @@ const Modals = () => {
               setCompMess={setMessageHandle}
             />
           ))
-          console.log('user login :', data.user)
+          console.log('user login :', data.users)
+          dispatch(setLoader(false))
         }
         ).catch((error) => {
           if (error.message === 'Network Error') {
+            console.log('dsajfjf hvchgafcds gvgfc hfydsd',error)
             dispatch(setMessageHandle(
               <Message
                 message={'pas de connexion !'}
@@ -124,7 +87,7 @@ const Modals = () => {
       const response = await login(user)
       setIsAuthenticated(response)
 
-    } catch ({ error }) {
+    }catch (error) {
       console.log(error)
       if (error.message === 'Network Error') {
         dispatch(setMessageHandle(

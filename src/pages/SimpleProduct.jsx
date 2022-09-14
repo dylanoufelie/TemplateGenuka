@@ -1,14 +1,17 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { addCart, setProduct } from '../settings/DataSlice';
+import Message from '../services/Message';
+import { addProductToCart, addTotalCart, setProduct, setQuantity } from '../settings/DataSlice';
 
 const SimpleProduct = () => {
 
     const data = useSelector((state) => state);
     const dispatch = useDispatch();
     const id = useParams().id;
+
+    const [messageAlt, setMessageAlt] = useState(null);
 
     if (data.product === null) {
         axios
@@ -17,6 +20,55 @@ const SimpleProduct = () => {
                 dispatch(setProduct(response.data))
                 console.log("single product :", response.data)
             })
+    }
+
+    function addToCart(products) {
+
+        let nbr = 0
+
+        if (data.cart.products.total === 0) {
+            let item = {}
+
+            item.name = products.name;
+            item.id = products.id;
+            item.quantity = 1;
+            item.price = products.price;
+            item.image = products.medias;
+
+            dispatch(addProductToCart(item));
+            dispatch(addTotalCart())
+            setMessageAlt(
+                <Message
+                    message={'this product has been added successfuly'}
+                    error={false}
+                    setCompMess={setMessageAlt}
+                />
+            );
+
+            console.log("total:", addProductToCart(item))
+
+        } else {
+            for (let index = 0; index < data.cart.products.total; index++) {
+                if (data.cart.products.product[index].id === products.id) {
+                    dispatch(setQuantity(products));
+                    nbr++;
+                }
+            }
+
+            if (nbr === 0) {
+                let item = {};
+
+                item.name = products.name;
+                item.id = products.id;
+                item.quantity = 1;
+                item.price = products.price;
+                item.image = products.medias;
+
+                dispatch(addProductToCart(item));
+                dispatch(addTotalCart());
+
+            }
+        }
     }
 
     setTimeout(function () {
@@ -28,7 +80,7 @@ const SimpleProduct = () => {
 
     return (
         <React.Fragment>
-
+            {messageAlt}
             <main>
                 <div className="title_na">
                     <h2 className="title-main">Product / {data.product.name}</h2>
@@ -43,10 +95,11 @@ const SimpleProduct = () => {
                                         <div class="images p-3">
                                             <div class="text-center p-4">
                                                 {
-                                                    <img id="main-image" src={data.product.medias[0].thumb} width={"100%"} alt="image default product" />
+                                                    // <img id="main-image" src={data.product.medias[0].thumb} width={"100%"} alt="image default product" />
                                                     // data.product.medias[0].lenght > 0 ? <img id="main-image" src={data.product.medias[0].thumb} width={"100%"} alt="image default product" />
                                                     //     : <img id="main-image" src='asset\image\product\productDefaut.png' width={"100%"} alt="image indisponible" />
-
+                                                    data.product.medias.slice(0, 1).map(
+                                                        image => (<img id="main-image" src={image.thumb} width={"100%"} alt="" />))
                                                 }
                                             </div>
                                         </div>
@@ -68,7 +121,7 @@ const SimpleProduct = () => {
                                                 <option value="dog">Bottle</option>
                                             </select>
 
-                                            <div class="cart mt-4 align-items-center"> <button class="btn btn-outline-success text-uppercase mr-2 px-4" onClick={() => addCart(data.product)}>Add to cart</button></div>
+                                            <div class="cart mt-4 align-items-center"> <button class="btn btn-outline-success text-uppercase mr-2 px-4" onClick={() => addToCart(data.product)}>Add to cart</button></div>
                                         </div>
                                     </div>
                                 </div>

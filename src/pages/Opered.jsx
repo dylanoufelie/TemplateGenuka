@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import LoadingPage from '../components/Loading/LoadingPage';
 import Message from '../services/Message';
 import { setCommande, setTotalPrice } from '../settings/DataSlice';
 import Cart from './Cart';
@@ -9,8 +10,8 @@ const Opered = () => {
 
   const data = useSelector((state) => state);
   const dispatch = useDispatch();
-  
-  const service = data.paymentService;
+
+  const [service, setService] = useState();
 
   const [mail, setMail] = useState(data.users.user.email);
   const [phone, setPhone] = useState();
@@ -164,58 +165,76 @@ const Opered = () => {
   if (!localStorage.miniblogToken) {
     return (
       <main>
+        {MessageComponent}
         <div className="title_na">
           <h2 className="title-main">Orders</h2>
         </div>
         {/* Gestion message d */}
-        <div>
-          {MessageComponent}
-        </div>
         <div class="card-opered">
           <h2 style={{ textAlign: "center" }} >Opered Order</h2>
           {/* <!-- Form settings START --> */}
-          <h5>personnal info</h5>
-          {/* <!-- First name --> */}
-          <div class="col-sm-6 col-lg-4">
-            <label class="form-label">First name</label>
-            <input type="text" class="form-control" placeholder="Dylan Jardel" />
+          <h5>Personnal info</h5>
+          <div className="row g-3">
+            {/* <!-- First name --> */}
+            <div class="col-sm-6 col-lg-4">
+              <label class="form-label">First name</label>
+              <input type="text" class="form-control" placeholder="Dylan Jardel" />
+            </div>
+            {/* <!-- Last name --> */}
+            <div class="col-sm-6 col-lg-4">
+              <label class="form-label">Last name</label>
+              <input type="text" class="form-control" placeholder="Nana Noufelie" />
+            </div>
+            {/* <!-- Additional name --> */}
+            <div class="col-sm-6 col-lg-4">
+              <label class="form-label">Email</label>
+              <input type="text" class="form-control" onChange={(e) => setMail(e.target.value)} placeholder="dylanomiguel09@gmail.com" />
+            </div>
+            <h5>delivery Info</h5>
+            {/* <!-- User name --> */}
+            <div class="col-sm-6">
+              <label class="form-label">receiver name</label>
+              <input type="text" class="form-control" placeholder="Nana" />
+            </div>
+            {/* <!-- Birthday --> */}
+            <div class="col-lg-6">
+              <label class="form-label">Address</label>
+              <input type="text" class="form-control flatpickr" onChange={(e) => setPlace(e.target.value)} placeholder="Dagobert" />
+            </div>
+            {/* <!-- Phone number --> */}
+            <div class="col-sm-6">
+              <label class="form-label">Phone number</label>
+              <input type="phone" class="form-control" onChange={(e) => setPhone(e.target.value)} placeholder="(678) 324-1251" />
+            </div>
+            {/* <!-- Phone number --> */}
+            <div class="col-sm-6">
+              <label class="form-label">date</label>
+              <input type="date" class="form-control" />
+              {/* <!-- Add new email --> */}
+            </div>
+            <h5>Payment method (Only for mobile money payement)</h5>
+            <div class="col-sm-6 col-lg-4">
+              <label class="form-label">Mobile Money</label>
+              <input type="phone" class="form-control" onChange={(e) => setService(e.target.value)} placeholder="entrer number OM/MTN" />
+            </div>
+            <div class="col-sm-6 col-lg-4">
+              <label class="form-label">Click here for pay with card</label>
+
+            </div>
+            {/* <!-- Button  --> */}
+            {
+              (!loader && (
+                <div class="col-12" style={{ textAlign: 'center' }}>
+                  <button onClick={() => order()} class="btn btn-sm btn-primary mb-0" style={{ padding: '1%', margin: '2%' }}>Buy order</button>
+                </div>
+              ) || (
+                  <LoadingPage />
+                )
+
+              )
+            }
           </div>
-          {/* <!-- Last name --> */}
-          <div class="col-sm-6 col-lg-4">
-            <label class="form-label">Last name</label>
-            <input type="text" class="form-control" placeholder="Nana Noufelie" />
-          </div>
-          {/* <!-- Additional name --> */}
-          <div class="col-sm-6 col-lg-4">
-            <label class="form-label">Email</label>
-            <input type="text" class="form-control" onChange={(e) => setMail(e.target.value)} placeholder="dylanomiguel09@gmail.com" />
-          </div>
-          <h5>delivery Info</h5>
-          {/* <!-- User name --> */}
-          <div class="col-sm-6">
-            <label class="form-label">receiver name</label>
-            <input type="text" class="form-control" placeholder="Nana" />
-          </div>
-          {/* <!-- Birthday --> */}
-          <div class="col-lg-6">
-            <label class="form-label">Address</label>
-            <input type="text" class="form-control flatpickr" onChange={(e) => setPlace(e.target.value)} placeholder="Dagobert" />
-          </div>
-          {/* <!-- Phone number --> */}
-          <div class="col-sm-6">
-            <label class="form-label">Phone number</label>
-            <input type="phone" class="form-control" onChange={(e) => setPhone(e.target.value)} placeholder="(678) 324-1251" />
-          </div>
-          {/* <!-- Phone number --> */}
-          <div class="col-sm-6">
-            <label class="form-label">date</label>
-            <input type="date" class="form-control" />
-            {/* <!-- Add new email --> */}
-          </div>
-          {/* <!-- Button  --> */}
-          <div class="col-12" style={{ textAlign: 'center' }}>
-            <button onClick={() => order()} class="btn btn-sm btn-primary mb-0" style={{ padding: '1%', margin: '2%' }}>Buy order</button>
-          </div>
+
         </div>
       </main>
     )

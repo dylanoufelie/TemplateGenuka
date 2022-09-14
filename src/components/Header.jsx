@@ -55,9 +55,9 @@ const Header = () => {
                                 <li className="nav-item active">
                                     <Link to={'/product'} className="nav-link" aria-current="page">Product</Link>
                                 </li>
-                                <li className="nav-item active">
+                                {/* <li className="nav-item active">
                                     <Link to={'/blogs'} className="nav-link" aria-current="page">Blogs</Link>
-                                </li>
+                                </li> */}
                             </ul>
                             <div className="research_nav" data-bs-toggle="modal" data-bs-target="#modalForSearch" tabindex="-1" aria-disabled="true">
                                 <nav className="d-flex" style={{ width: '150%' }}>
@@ -71,7 +71,7 @@ const Header = () => {
                                     <Link to={'/cart'} className="nav-link" aria-current="page"><i className="fa-solid fa-cart-shopping"></i></Link>
                                 </li>
                                 {(!isAuthenticated && (
-                                    ( !loader && 
+                                    // ( !loader && 
                                     <>
                                         <li className="nav-item active">
                                             <Link to={'#'} className="nav-link" data-bs-toggle="modal" data-bs-target="#modalCreateEvents" tabindex="-1" aria-disabled="true"><i className="fa-solid fa-registered" title='Register'></i></Link>
@@ -80,7 +80,7 @@ const Header = () => {
                                             <Link to={'#'} className="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogin" tabindex="-1" aria-disabled="true"><i className="fa-solid fa-user" title='Login'></i></Link>
                                         </li>
                                     </>)
-                                    ) || ( <LoadingPage /> ) 
+                                    // ) || ( <LoadingPage /> ) 
                                 ) || (
                                     <>
                                         <li className="nav-item active">

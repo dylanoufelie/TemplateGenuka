@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import { addCart, addProductToCart, addTotalCart, setProduct, setAllProducts, setQuantity, setMessageHandle } from '../settings/DataSlice'
+import { addProductToCart, addTotalCart, setProduct, setAllProducts, setQuantity } from '../settings/DataSlice'
 import Message from '../services/Message';
 
 const Card = () => {
 
     const data = useSelector((state) => state);
     const dispatch = useDispatch();
+    const [messageAlt, setMessageAlt] = useState(null);
 
     useEffect(
         () => {
@@ -35,11 +36,11 @@ const Card = () => {
             item.image = products.medias;
 
             dispatch(addProductToCart(item));
-            dispatch(addTotalCart(), setMessageHandle(
+            dispatch(addTotalCart(), setMessageAlt(
                 <Message
                     message={'this product has been added successfuly'}
                     error={false}
-                    setCompMess={setMessageHandle}
+                    setCompMess={setMessageAlt}
                 />
             ));
 
@@ -72,6 +73,7 @@ const Card = () => {
 
     return (
         <div className="product-card">
+            {messageAlt}
             {
                 data.allProducts.map(
                     products => (
